@@ -1,11 +1,11 @@
-﻿# 🏆 REVIVE EL MUNDIAL DE NORTEAMÉRICA — "DOMINIO ESPAÑOL" 2026
+﻿# 🏆 RELIVING THE 2026 WORLD CUP 2026 — SPANISH DOMINANCE
 
 > **A mobile-first Angular/Ionic web application commemorating Spain's triumph at the 2026 FIFA World Cup.**
 
 | | |
 |---|---|
 | **Launch Date** | August 19, 2026 |
-| **Brand Identity** | DOMINIO ESPAÑOL |
+| **Brand Identity** | SPANISH DOMINANCE |
 | **Academic Context** | 3rd Year Computer Engineering Portfolio — Universidad de Zaragoza (EINA) |
 | **Live URL** | Firebase App Hosting (Angular SSR) |
 
@@ -32,7 +32,7 @@
 
 This is a personal commemorative web application built to immortalize Spain's dominant performance at the 2026 FIFA World Cup — hosted across the United States, Canada, and Mexico. The app tells the story of the tournament from a Spanish perspective, blending historical football data with an immersive, premium mobile experience.
 
-The core branding concept, **"DOMINIO ESPAÑOL"**, is expressed across every UI layer: from the animated victory marquee at the top of the screen to the golden (#F1BF00) accent color used throughout the interface.
+The core branding concept, **"SPANISH DOMINANCE"**, is expressed across every UI layer: from the animated victory marquee at the top of the screen to the golden (#F1BF00) accent color used throughout the interface.
 
 **Key Product Goals:**
 - Deliver a **cinematic, narrative-driven** experience of the 2026 World Cup
@@ -127,7 +127,7 @@ mundial-2026-web/
 
 ### 4.1 Header Marquee
 A sticky animated banner at the top of every screen:
-- **Victory text strip** (red background, #F1BF00 text): scrolling marquee celebrating Spain with the "DOMINIO ESPAÑOL" message
+- **Victory text strip** (red background, #F1BF00 text): scrolling marquee celebrating Spain with the "SPANISH DOMINANCE" message
 - **Flags strip**: scrolling marquee of SVG flags for all 48 participating nations
 - Respects `prefers-reduced-motion` — converts to a static centered message when motion is disabled
 - Navigation buttons to scroll between main sections
