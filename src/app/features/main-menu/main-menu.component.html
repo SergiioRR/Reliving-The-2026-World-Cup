@@ -1,0 +1,67 @@
+<!--
+  ~ @file main-menu.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Angular component or service module for the World Cup 2026 application.
+  -->
+
+<ion-toolbar class="main-nav-toolbar" role="navigation" aria-label="Menú principal de torneos">
+  <div class="nav-container">
+
+    <!-- Left: FIFA Trophy real SVG -->
+    <ion-button routerLink="/" fill="clear" class="brand-container-btn" aria-label="Volver al inicio"
+      style="z-index: 999; position: relative;">
+      <div class="brand-container">
+        <img src="assets/icons/trofeo.svg" alt="Trofeo Mundial 2026" class="brand-trophy">
+        <span class="brand-fifa">FIFA</span>
+      </div>
+    </ion-button>
+
+    <!-- Center: Navigation Links (no dropdown arrows per Figma) -->
+    <nav class="nav-links">
+      <ion-button fill="clear" class="nav-btn" id="trigger-matches">
+        PARTIDOS
+      </ion-button>
+      <ion-popover #matchesPopover trigger="trigger-matches" triggerAction="click" alignment="center">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item button routerLink="/partidos" (click)="matchesPopover.dismiss()">Vista General</ion-item>
+              <ion-item button routerLink="/group/a" (click)="matchesPopover.dismiss()">Fase de Grupos (A-L)</ion-item>
+              <ion-item button routerLink="/knockouts/dieciseisavos"
+                (click)="matchesPopover.dismiss()">Dieciseisavos</ion-item>
+              <ion-item button routerLink="/knockouts/octavos" (click)="matchesPopover.dismiss()">Octavos</ion-item>
+              <ion-item button routerLink="/knockouts/cuartos" (click)="matchesPopover.dismiss()">Cuartos</ion-item>
+              <ion-item button routerLink="/knockouts/semifinales" (click)="matchesPopover.dismiss()">Semis</ion-item>
+              <ion-item button routerLink="/knockouts/tercer-puesto" (click)="matchesPopover.dismiss()">Tercer Puesto
+                puesto</ion-item>
+              <ion-item button routerLink="/knockouts/final" (click)="matchesPopover.dismiss()">Final</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-button fill="clear" class="nav-btn" id="trigger-stats">
+        ESTADÍSTICAS
+      </ion-button>
+      <ion-popover trigger="trigger-stats" triggerAction="click" alignment="center">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item button>Estadísticas Jugadores</ion-item>
+              <ion-item button>Estadísticas Selecciones</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </nav>
+
+    <div class="chatbot-trigger-container">
+      <ion-button class="naranjito-btn" fill="clear" routerLink="/chatbot"
+        aria-label="Mascota Naranjito - Asistente IA">
+        <ion-img src="assets/icons/naranjito.svg" alt="Mascota Naranjito - Asistente IA" class="naranjito-icon">
+        </ion-img>
+      </ion-button>
+    </div>
+
+  </div>
+</ion-toolbar>

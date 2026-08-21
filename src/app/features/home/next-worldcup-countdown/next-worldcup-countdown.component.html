@@ -1,0 +1,82 @@
+<!--
+  ~ @file next-worldcup-countdown.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Countdown timer component for the next World Cup.
+  -->
+
+<!-- ══════════════════════════════════════════════
+     NextWorldCupCountdownComponent
+     Fix 10: Countdown polish + professional footer
+     ══════════════════════════════════════════════ -->
+<section class="countdown-section" role="region" aria-label="Cuenta atrás para el próximo Mundial FIFA 2030">
+
+  <!-- ── Engagement heading ──────────────────── -->
+  <div class="countdown-header">
+    <div class="countdown-eyebrow">El Futuro del Fútbol</div>
+    <h2 class="countdown-title">
+      ¿Cuánto falta para<br>
+      <span class="countdown-title--accent">el próximo Mundial?</span>
+    </h2>
+    <p class="countdown-slogan">
+      Mientras esperas el <strong>Mundial 2030</strong>, sumérgete en las estadísticas,<br class="desktop-br">
+      partidos y momentos históricos que se escribieron en 2026.<br class="desktop-br">
+      Cada dato es un recuerdo que merece la pena revivirlo.
+    </p>
+  </div>
+
+  <!-- ── Countdown timer ──────────────────────── -->
+  @if (!isFinished()) {
+  <div class="countdown-grid" role="timer" aria-label="Tiempo restante para el Mundial 2030" aria-live="off">
+    @for (unit of units(); track unit.label) {
+    <div class="countdown-unit">
+      <div class="countdown-value" [attr.aria-label]="unit.value + ' ' + unit.label">
+        {{ pad(unit.value) }}
+      </div>
+      <div class="countdown-label" aria-hidden="true">
+        {{ unit.label }}
+      </div>
+    </div>
+    <!-- Separator (not before last item) -->
+    @if (unit.label !== 'SEGUNDOS') {
+    <div class="countdown-sep" aria-hidden="true">:</div>
+    }
+    }
+  </div>
+  } @else {
+  <div class="countdown-finished" role="status" aria-live="polite">
+    🏆 ¡El Mundial ha comenzado! 🇪🇸
+  </div>
+  }
+
+  
+
+</section>
+
+<!-- ══════════════════════════════════════════════
+     Fix 10: Professional Footer
+     ══════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo" aria-label="Pie de página del sitio">
+
+  <!-- Footer nav links -->
+  <nav class="footer-links" aria-label="Navegación del pie de página">
+    <a routerLink="/privacidad" class="footer-link" id="lnk-privacy">
+      Política de Privacidad
+    </a>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a routerLink="/accesibilidad" class="footer-link" id="lnk-a11y">
+      Declaración de Accesibilidad
+    </a>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a routerLink="/aviso-legal" class="footer-link" id="lnk-legal">
+      Aviso Legal
+    </a>
+  </nav>
+
+  <!-- Copyright -->
+  <p class="footer-copyright">
+    <small>
+      &copy; 2026 Todos los derechos reservados. No afiliado a FIFA&trade;.
+    </small>
+  </p>
+
+</footer>

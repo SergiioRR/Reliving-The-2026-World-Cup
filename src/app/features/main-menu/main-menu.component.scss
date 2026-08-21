@@ -1,0 +1,128 @@
+/**
+ * @file main-menu.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Angular component or service module for the World Cup 2026 application.
+ */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* ─── TOOLBAR ─────────────────────────────────────────── */
+.main-nav-toolbar {
+  --background: #111111;
+  --min-height: 72px; /* Zero CLS */
+  border-bottom: 1px solid #2A2A2A;
+}
+
+/* ─── ROW CONTAINER ──────────────────────────────────── */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  padding: 0 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ─── LEFT: TROPHY ────────────────────────────────────── */
+.brand-container-btn {
+  --padding-start: 0;
+  --padding-end: 0;
+  --background: transparent;
+  --background-hover: transparent;
+  --background-activated: transparent;
+  height: auto;
+  margin: 0;
+  min-width: 44px; /* WCAG touch area */
+}
+
+.brand-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 44px; /* WCAG touch area */
+}
+
+.brand-trophy {
+  /* Show the real FIFA trophy at a proper height */
+  width: auto;
+  height: 52px;
+  max-height: 52px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-fifa {
+  color: #F1BF00;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* ─── CENTER: NAVIGATION ─────────────────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 56px; /* Wide spacing per Figma */
+
+  @media (max-width: 768px) {
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar { display: none; }
+  }
+}
+
+.nav-btn {
+  /* Exact Figma style: white, bold, wide tracking, NO arrows */
+  --color: #FFFFFF;
+  --color-hover: #F1BF00;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 0;
+  --padding-start: 0px;
+  --padding-end: 0px;
+
+  /* WCAG 2.1 AA/AAA – 44×44 px touch target */
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* ─── RIGHT: NARANJITO ──────────────────────────────── */
+.chatbot-trigger-container {
+  display: flex;
+  align-items: center;
+}
+
+.naranjito-btn {
+  --padding-start: 0;
+  --padding-end: 0;
+  --background: transparent;
+  --background-hover: transparent;
+  --background-activated: transparent;
+  margin: 0;
+  /* WCAG 2.1 AA/AAA – 44×44 px touch target */
+  min-width: 56px;
+  min-height: 56px;
+  width: 56px;
+  height: 56px;
+}
+
+.naranjito-icon {
+  /* Show the full Naranjito mascot at a visible size */
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  display: block;
+}

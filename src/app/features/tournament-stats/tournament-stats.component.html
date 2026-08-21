@@ -1,0 +1,116 @@
+<!--
+  ~ @file tournament-stats.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Component for displaying overall tournament statistics and player rankings.
+  -->
+
+<section class="tournament-stats-container">
+
+  <!-- Header with image and fade -->
+  <div class="stats-hero">
+    <div class="hero-image"></div>
+    <div class="hero-fade-mask"></div>
+  </div>
+
+  <!-- Central box for title and subtitle -->
+  <div class="header-section-wrapper">
+    <div class="header-section">
+      <h2 class="main-title">EL LABORATORIO DE RANKINGS</h2>
+      <p class="subtitle">DATOS DE ALTO RENDIMIENTO Y CURIOSOS QUE HA DEJADO LA COPA DEL MUNDO 2026</p>
+    </div>
+  </div>
+
+  <!-- Statistics grid -->
+  <ion-grid class="stats-grid">
+    <ion-row>
+      @for (category of statCategories(); track category.title) {
+      <ion-col size="12" size-md="6" size-lg="4" class="stat-col">
+        <div class="stat-card" appScrollAnimate>
+          <h3 class="card-title">{{ category.title }}</h3>
+
+          @if (category.players.length > 0) {
+          <ul class="player-list">
+            @for (player of category.players; track player.shirtName; let idx = $index) {
+            <li class="player-item" [ngClass]="'rank-' + (idx + 1)">
+              <div class="player-box">
+                <span class="rank-number">{{ idx + 1 }}</span>
+                <div class="flag-circle">
+                  <img [src]="'assets/flags/Flag-' + player.country + '.svg'" [alt]="player.country">
+                </div>
+                <span class="player-name">
+                  <strong class="player-last-name">{{ player.shirtName | uppercase }}</strong>
+                </span>
+                <span class="player-value">{{ player.value }}</span>
+              </div>
+            </li>
+            }
+          </ul>
+          } @else {
+                    <div class="empty-state">
+            <span class="empty-text">Esperando datos...</span>
+          </div>
+          }
+        </div>
+      </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+
+  <!-- Award boxes -->
+  <ion-grid class="awards-grid">
+    <!-- New awards header aligned with boxes -->
+    <ion-row class="awards-spacing">
+      <ion-col size="12">
+        <div class="header-section" appScrollAnimate style="margin-bottom: 32px; max-width: 100%;">
+          <h2 class="main-title">LOS NOMBRES PROPIOS DE LA COPA DEL MUNDO 2026</h2>
+          <p class="subtitle">LA CORONA ABSOLUTA: LA DINASTIA DE LA ROJA REINA EN LOS PREMIOS DE LA FIFA</p>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <!-- Best Player -->
+      <ion-col size="12" size-md="4">
+        <div class="award-card" appScrollAnimate>
+          <div class="award-photo">
+            <img src="assets/images/rodri.jpeg" alt="Rodri">
+          </div>
+          <div class="award-title">MEJOR JUGADOR</div>
+          <div class="award-player">RODRI</div>
+        </div>
+      </ion-col>
+
+      <!-- Best Player Joven -->
+      <ion-col size="12" size-md="4">
+        <div class="award-card" appScrollAnimate>
+          <div class="award-photo">
+            <img src="assets/images/cubarsi.png" alt="Cubarsí">
+          </div>
+          <div class="award-title">MEJOR JUGADOR JOVEN</div>
+          <div class="award-player">CUBARSÍ</div>
+        </div>
+      </ion-col>
+
+      <!-- Best Goalkeeper -->
+      <ion-col size="12" size-md="4">
+        <div class="award-card" appScrollAnimate>
+          <div class="award-photo">
+            <img src="assets/images/unai.webp" alt="Unai Simón">
+          </div>
+          <div class="award-title">MEJOR PORTERO</div>
+          <div class="award-player">UNAI SIMÓN</div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Bottom Navigation Buttons -->
+  <div class="navigation-actions">
+    <button class="btn-gold" routerLink="/">
+      &larr; VOLVER AL INICIO
+    </button>
+    <button class="btn-gold" routerLink="/stats/selecciones">
+      ESTADISTICAS SELECCIONES &rarr;
+    </button>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+{
+    "$schema": "https://opencode.ai/schema.json",
+    "mcp": {
+        "figma": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "-y",
+                "framelink-figma-mcp"
+            ],
+            "environment": {
+                "FIGMA_PERSONAL_ACCESS_TOKEN": "YOUR_FIGMA_TOKEN"
+            },
+            "description": "Servidor MCP de Figma para inspeccionar capas, camisetas y componentes visuales del Mundial 2026."
+        },
+        "postgres-mundial2026": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-postgres",
+                "postgresql://postgres:postgres@localhost:5432/Mundial_2026"
+            ],
+            "description": "Servidor MCP de PostgreSQL para auditar las 25 tablas relacionales 3FN y ejecutar el pipeline ETL hacia Firestore."
+        },
+        "context7": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "-y",
+                "@upstash/context7-mcp"
+            ],
+            "description": "Proporciona acceso en tiempo real a la documentación oficial de Angular 18+, Ionic Framework (@ionic/angular) y Google Cloud Firestore para evitar alucinaciones de sintaxis y APIs obsoletas."
+        }
+    }
+}

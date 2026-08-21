@@ -1,0 +1,124 @@
+<!--
+  ~ @file home-scroll-sections.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Angular component or service module for the World Cup 2026 application.
+  -->
+
+<!-- ══════════════════════════════════════════════
+     HomeScrollSectionsComponent
+     Scroll-triggered reveal (fade-up + scale)
+     ══════════════════════════════════════════════ -->
+
+<!-- ── Section 1: Introductory Narrative ──────── -->
+<section
+  #revealSection
+  class="scroll-section intro-section"
+  role="region"
+  aria-label="Introducción: El Mundial de mi vida"
+>
+  <div class="section-inner">
+    <div class="section-eyebrow">El Verano de 2026</div>
+    <h2 class="section-title">
+      El Mundial<br>
+      <span class="section-title--accent">de mi Vida</span>
+    </h2>
+    <div class="section-divider" aria-hidden="true">
+      <span>🇪🇸</span>
+    </div>
+    <p class="section-body">
+      En el verano de 2026, Norteamérica acogió el primer Mundial de 48 equipos
+      de la historia. Ante la mirada del mundo, España protagonizó uno de los
+      torneos más dominantes jamás vistos: siete partidos, siete victorias,
+      veintidós goles a favor y tan solo tres en contra.
+    </p>
+    <p class="section-body">
+      El equipo de <strong>Luis de la Fuente</strong> elevó la Roja a una
+      cota mítica. La nueva generación — heredera del legado del tiqui-taca —
+      impuso su estilo en cada estadio de Estados Unidos, Canadá y México.
+    </p>
+    <div class="section-stats-row" aria-label="Estadísticas clave del torneo">
+      <div class="stat-chip">
+        <span class="stat-value">7</span>
+        <span class="stat-label">Victorias</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-value">22</span>
+        <span class="stat-label">Goles a favor</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-value">3</span>
+        <span class="stat-label">Goles en contra</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-value">⭐⭐</span>
+        <span class="stat-label">Copas del Mundo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 2: Legendary Tournament / All-Stars ─ -->
+<section
+  #revealSection
+  class="scroll-section legend-section"
+  role="region"
+  aria-label="Sección leyenda: La épica del Mundial 2026"
+>
+  <div class="section-inner">
+    <div class="section-eyebrow">La Leyenda</div>
+    <h2 class="section-title">
+      El Torneo<br>
+      <span class="section-title--accent">Histórico</span>
+    </h2>
+    <div class="section-divider" aria-hidden="true">
+      <span>🏆</span>
+    </div>
+
+    <div class="legend-layout">
+      <div class="legend-text">
+        <p class="section-body">
+          El Mundial 2026 pasará a la historia como el torneo que redefinió el
+          fútbol global. Por primera vez, 48 selecciones lucharon por la gloria
+          en tres países anfitriones. Los estadios más icónicos de
+          Norteamérica — MetLife, AT&amp;T, Azteca — fueron testigos de duelos
+          épicos y momentos imborrables.
+        </p>
+        <p class="section-body">
+          España, con un fútbol vibrante y posesional, deslumbró en cada partido.
+          El <strong>DOMINIO ESPAÑOL</strong> fue total: en el juego, en la
+          táctica, en el espíritu. Una generación irrepetible que merece
+          su lugar en la eternidad del deporte rey.
+        </p>
+        <blockquote class="legend-quote">
+          <p>
+            "No ganamos el Mundial. Lo dominamos."
+          </p>
+          <cite>— Luis de la Fuente, seleccionador nacional</cite>
+        </blockquote>
+      </div>
+
+      <!-- Fix 7: All-Stars Poster — text overlaid directly on poster with backdrop blur -->
+      <div
+        class="allstars-poster-slot"
+        role="img"
+        aria-label="Póster del Once Ideal del Mundial 2026 — próximamente"
+      >
+        <!-- Poster image layer (background) -->
+        <div class="poster-bg" aria-hidden="true">
+          <div class="poster-bg__grid">
+            @for (p of [1,2,3,4,5,6,7,8,9,10,11] ; track p) {
+              <div class="poster-player-slot"></div>
+            }
+          </div>
+        </div>
+        <!-- Fix 7: Text overlay with backdrop-filter:blur(8px) -->
+        <div class="poster-overlay-text">
+          <span class="poster-overlay__icon" aria-hidden="true">⚽</span>
+          <p class="poster-overlay__title">Once Ideal del Mundial 2026</p>
+          <p class="poster-overlay__sub">Póster — próximamente</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

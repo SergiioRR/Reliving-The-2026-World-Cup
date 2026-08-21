@@ -1,0 +1,142 @@
+/**
+ * @file styles.scss
+ * @author Sergio Romera Rupérez
+ * @description Global stylesheet for the application.
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import '@ionic/angular/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+
+/* Optional CSS utils */
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/flex-utils.css';
+@import '@ionic/angular/css/display.css';
+
+/* ─────────────────────────────────────────────
+   DOMINIO ESPAÑOL — Global Design Tokens
+   ───────────────────────────────────────────── */
+:root {
+  /* Brand palette */
+  --color-spain-red:      #CC0000;
+  --color-spain-yellow:   #F1BF00;
+  --color-pitch-black:    #000000;
+  --color-midnight:       #0a0a0f;
+  --color-dark-navy:      #0f172a;
+  --color-dark-surface:   #111827;
+  --color-dark-card:      #1e293b;
+  --color-border-subtle:  #334155;
+  --color-text-primary:   #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted:     #64748b;
+  --color-accent-gold:    #F1BF00;
+
+  /* Typography */
+  --font-sans:   'Inter', system-ui, -apple-system, sans-serif;
+  --font-display:'Bebas Neue', 'Impact', sans-serif;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Touch target minimum (WCAG 2.5.5) */
+  --touch-target: 44px;
+
+  /* Z-index layers */
+  --z-header:   100;
+  --z-nav:       90;
+  --z-dropdown: 200;
+  --z-tooltip:  300;
+}
+
+/* ─────────────────────────────────────────────
+   Global Resets & Base
+   ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--color-midnight);
+  color: var(--color-text-primary);
+  color-scheme: dark;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal overflow on mobile (320px–430px) */
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Custom Scrollbar for Dark Mode (Windows) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-midnight);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-subtle);
+  border-radius: 6px;
+  border: 3px solid var(--color-midnight);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+ion-app {
+  background: var(--color-midnight);
+  --ion-background-color: var(--color-midnight);
+  --ion-text-color: var(--color-text-primary);
+}
+
+ion-content {
+  --background: var(--color-midnight);
+}
+
+/* Universal touch target enforcement */
+button, a, [role="button"] {
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+}
+
+/* Focus-visible ring (WCAG 2.4.7) */
+:focus-visible {
+  outline: 3px solid var(--color-spain-yellow);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────
+   Reduced Motion Safety — Global
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Make main menu popover accordion arrow white */
+ion-accordion.white-arrow-accordion {
+  --icon-color: #ffffff !important;
+  --ion-color-step-850: #ffffff !important;
+}
+
+ion-accordion.white-arrow-accordion::part(expanded-icon),
+ion-accordion.white-arrow-accordion::part(collapsed-icon) {
+  color: #ffffff !important;
+}

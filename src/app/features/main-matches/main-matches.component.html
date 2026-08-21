@@ -1,0 +1,120 @@
+<!--
+  ~ @file main-matches.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Angular component or service module for the World Cup 2026 application.
+  -->
+
+<div class="main-matches-container">
+
+  <!-- Image Mosaic Hero -->
+  <div class="mosaic-hero">
+
+    <!-- Top Row: Groups A-F -->
+    <div class="mosaic-row top-row">
+      <img src="assets/main-matches/GroupsA-F.png" alt="Groups A to F" class="mosaic-img top-img">
+    </div>
+
+    <!-- Middle Row: Left Table, Bracket, Right Table -->
+    <div class="mosaic-row middle-row">
+      <img src="assets/main-matches/TableA-F.png" alt="Table A to F" class="mosaic-img side-img">
+      <img src="assets/main-matches/Bracket.png" alt="Knockout Bracket" class="mosaic-img bracket-img">
+      <img src="assets/main-matches/TableG-I.png" alt="Table G to I" class="mosaic-img side-img">
+    </div>
+
+    <!-- Bottom Row: Groups G-K -->
+    <div class="mosaic-row bottom-row">
+      <img src="assets/main-matches/GroupsG-I.png" alt="Groups G to I" class="mosaic-img bottom-img">
+    </div>
+
+    <!-- Fade out gradient to seamlessly transition to content -->
+    <div class="fade-mask"></div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+
+    <!-- Intro Text Box -->
+    <div class="intro-card" appScrollAnimate>
+      <h2 class="intro-title">El latido de 48 naciones: 104 partidos hacia la gloria</h2>
+      <p class="intro-text">
+        39 días de pasión desenfrenada a través de tres naciones colosales: Estados Unidos, México y Canadá. 16
+        ciudades, 104 partidos y 48 selecciones. El nuevo formato abrió de par en par las puertas a epopeyas que rozaban
+        lo utópico: Cabo Verde, Curazao, Jordania y Uzbekistán pisaron por primera vez la alfombra del sueño
+        mundialista. Algunos llegaron para tatuar su nombre en la eternidad, como una heroica Cabo Verde que miró a los
+        ojos y llevó al límite a las dos selecciones que acabarían disputando la final.
+      </p>
+      <p class="intro-text">
+        Desde el estruendo inaugural en el mítico Estadio Azteca hasta el desenlace, el torneo fue un campo de minas
+        para la lógica. Presenciamos asaltos a la historia, como la machada paraguaya derrocando a la implacable máquina
+        alemana, y revelaciones que dinamitaron los pronósticos. Hubo gigantes que cayeron antes de tiempo y batallas
+        que estiraron los latidos al máximo: remontadas de infarto, prórrogas agónicas y desenlaces fatídicos desde los
+        once metros que hicieron contener millones de respiraciones.
+      </p>
+      <p class="intro-text">
+        De la sorpresa al delirio, de las lágrimas a la gloria. Cada encuentro esculpió un relato y cada estadio forjó
+        un mito. Porque cuando el balón dejó de rodar en el colosal e imponente MetLife Stadium de Nueva Jersey bajo el
+        cielo del 19 de julio, solo quedó una certeza absoluta: la Copa del Mundo 2026 fue una colección imborrable de
+        recuerdos .
+      </p>
+      <img src="assets/icons/trionda.svg" class="trionda-decor" alt="">
+    </div>
+
+    <!-- Podium Section -->
+    <div class="podium-section" appScrollAnimate>
+      
+      <div class="podium-arch">
+        <svg viewBox="0 0 1000 400" width="100%">
+          <path id="archPath" d="M 50,350 Q 500,-50 950,350" fill="transparent" />
+          <text class="arch-text" font-size="42" letter-spacing="4">
+            <textPath href="#archPath" startOffset="50%" text-anchor="middle">
+              LA CIMA DEL MUNDO TIENE DUEÑO
+            </textPath>
+          </text>
+        </svg>
+      </div>
+
+      <div class="podium-container">
+
+        <!-- Plata (2nd) -->
+        <div class="podium-step step-silver">
+          <div class="team-info">
+            <img src="assets/flags/Flag-ARG.svg" class="podium-flag" alt="Argentina">
+          </div>
+          <div class="podium-block silver-block">
+            <span class="podium-number">2</span>
+          </div>
+        </div>
+
+        <!-- Oro (1st) -->
+        <div class="podium-step step-gold">
+          <div class="team-info">
+            <img src="assets/flags/Flag-ESP.svg" class="podium-flag" alt="España">
+          </div>
+          <div class="podium-block gold-block">
+            <span class="podium-number">1</span>
+          </div>
+        </div>
+
+        <!-- Bronce (3rd) -->
+        <div class="podium-step step-bronze">
+          <div class="team-info">
+            <img src="assets/flags/Flag-ENG.svg" class="podium-flag" alt="Inglaterra">
+          </div>
+          <div class="podium-block bronze-block">
+            <span class="podium-number">3</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Call to Action Button -->
+    <div class="action-section" appScrollAnimate>
+      <button class="explore-btn" (click)="navigateToGroupA()">
+        COMENZAR A EXPLORAR
+      </button>
+    </div>
+
+  </div>
+
+</div>

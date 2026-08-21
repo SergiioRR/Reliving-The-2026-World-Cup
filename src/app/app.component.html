@@ -1,0 +1,24 @@
+<!--
+  ~ @file app.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Root component of the Angular application.
+  -->
+
+<ion-app>
+
+  <!-- ── Sticky header stack (outside ion-content for correct Ionic layout) ── -->
+  <!-- 1. Dual marquee (victory banner + 48-team flags) -->
+  <app-header-marquee />
+
+  <!-- 2. Main navigation with dropdowns & Naranjito chatbot trigger -->
+  <app-main-menu />
+
+  <!-- ── Scrollable page content ─────────────────────────────────────────── -->
+  <ion-content [fullscreen]="true" role="main" aria-label="Contenido principal — El Mundial de mi vida">
+
+    <!-- 6. Router outlet — renders home or match views when navigating -->
+    <router-outlet aria-label="Contenido de la aplicación" />
+
+  </ion-content>
+
+</ion-app>

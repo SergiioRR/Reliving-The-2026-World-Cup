@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "mundial-2026-web-5b963"
+  },
+  "targets": {
+    "mundial-2026-web-5b963": {
+      "hosting": {
+        "miweb": [
+          "rememoraelmundial2026"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

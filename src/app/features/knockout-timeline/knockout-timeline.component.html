@@ -1,0 +1,187 @@
+<!--
+  ~ @file knockout-timeline.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Timeline component displaying the knockout stage matches and progression.
+  -->
+
+<div class="timeline-container">
+  <!-- Header Fade Gradient Container -->
+  <div class="header-fade">
+    <div class="header-content">
+      <ion-icon name="arrow-back-outline" class="back-btn"></ion-icon>
+      <h1 class="group-title">{{ phaseTitle | uppercase }}</h1>
+    </div>
+  </div>
+
+  @if (matches()) {
+    <div class="timeline-content">
+      <!-- Central Golden Timeline Line -->
+      <div class="timeline-line"></div>
+
+      <!-- Alternating Match Cards -->
+      @for (match of matches(); track match.id; let i = $index) {
+        <div class="match-row" [ngClass]="{'row-left': i % 2 !== 0, 'row-right': i % 2 === 0, 'has-summary': !!match.summary}">
+          
+          <!-- Golden Stadium Node (Intersection) -->
+          <div class="timeline-node">
+            <img [src]="getStadiumLogo(match)" class="node-icon" alt="Sede">
+          </div>
+
+          <!-- Match Column (Contains Card + Summary) -->
+          <div class="match-column">
+            <!-- Match Card -->
+            <ion-card class="match-card" appScrollAnimate [ngClass]="{'is-live': match.score?.status === 'LIVE'}">
+              <!-- LIVE Header -->
+              @if (match.score?.status === 'LIVE') {
+                <div class="live-header">
+                  <span class="live-dot"></span> LIVE <span class="stadium-name">{{ match.stadium?.name }}</span>
+                </div>
+              }
+
+              <ion-card-content>
+                <div class="teams-container">
+                  <div class="team">
+                    <div class="flag-placeholder">
+                      <img [src]="'assets/flags/Flag-' + match.homeTeamFifaCode + '.svg'" alt="{{ match.homeTeamName }}" class="flag-img">
+                    </div>
+                    <span class="team-name">{{ match.homeTeamFifaCode }}</span>
+                  </div>
+                  
+                  <div class="score-container">
+                    <span class="score-number">{{ match.score?.home }}</span>
+                    @if (match.score?.penaltiesHome != null) {
+                      <span class="penalty-number">({{ match.score?.penaltiesHome }})</span>
+                    }
+                    <span class="score-separator">-</span>
+                    @if (match.score?.penaltiesAway != null) {
+                      <span class="penalty-number">({{ match.score?.penaltiesAway }})</span>
+                    }
+                    <span class="score-number">{{ match.score?.away }}</span>
+                    @if (match.score?.status === 'LIVE') {
+                      <span class="live-minute">78'</span>
+                    }
+                  </div>
+                  
+                  <div class="team">
+                    <div class="flag-placeholder">
+                      <img [src]="'assets/flags/Flag-' + match.awayTeamFifaCode + '.svg'" alt="{{ match.awayTeamName }}" class="flag-img">
+                    </div>
+                    <span class="team-name">{{ match.awayTeamFifaCode }}</span>
+                  </div>
+                </div>
+
+                <div class="details-link-container">
+                  <a class="details-link" [routerLink]="['/match', match.id]"
+                     (click)="trackInteraction()"
+                     [attr.aria-label]="'Ver detalles del partido ' + match.homeTeamName + ' contra ' + match.awayTeamName">
+                    VER DETALLES &rarr;
+                  </a>
+                </div>
+              </ion-card-content>
+            </ion-card>
+
+            <!-- Match Specific Summary (for Semifinals etc) -->
+            @if (match.summary) {
+              <div class="motr-card match-specific-summary" appScrollAnimate>
+                <div class="motr-image-container">
+                  <img [src]="match.summary.image" [alt]="match.summary.title" class="motr-img">
+                  @if (match.summary.badge) {
+                    <div class="motr-badge" [ngClass]="match.summary.badgePosition === 'right' ? 'badge-right' : 'badge-left'">
+                      {{ match.summary.badge }}
+                    </div>
+                  }
+                </div>
+                <div class="motr-content">
+                  <h2 class="motr-title">{{ match.summary.title }}</h2>
+                  @for (paragraph of getParagraphs(match.summary.text); track $index) {
+                    <p class="motr-summary">{{ paragraph }}</p>
+                  }
+                </div>
+                <!-- Trionda Decor (Lower Right Corner) -->
+                <img src="assets/icons/trionda.svg" class="trionda-decor" alt="">
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+    
+    <!-- MATCH OF THE ROUND BLOCK (Hide for Semifinals/Final if no motrData) -->
+    @if (motrData()) {
+      <div class="match-of-the-round-node" [ngClass]="{'final-motr-node': phase === 'final'}">
+        <div class="motr-card" appScrollAnimate>
+          <div class="motr-image-container">
+            <img [src]="motrData()?.image" alt="Partido de la Ronda" class="motr-img">
+            <div class="motr-badge" [ngClass]="motrData()?.badgePosition === 'right' ? 'badge-right' : 'badge-left'">
+              {{ motrData()?.badge || 'PARTIDO DE LA RONDA' }}
+            </div>
+          </div>
+          <div class="motr-content">
+            <h2 class="motr-title">{{ motrData()?.title }}</h2>
+            @for (paragraph of getParagraphs(motrData()?.summary); track $index) {
+              <p class="motr-summary">{{ paragraph }}</p>
+            }
+          </div>
+          <!-- Trionda Decor (Lower Right Corner) -->
+          <img src="assets/icons/trionda.svg" class="trionda-decor" alt="">
+        </div>
+
+        <!-- Final Trophy Node -->
+        @if (phase === 'final') {
+          <div class="final-trophy-container">
+            <div class="trophy-line"></div>
+            <div class="trophy-circle" appScrollAnimate (click)="goHome()" style="cursor: pointer;" tabindex="0" aria-label="Volver al inicio" role="button">
+              <img src="assets/icons/trofeo.svg" alt="Trofeo" class="trophy-icon">
+            </div>
+            <div class="champion-text-container" appScrollAnimate>
+              <p class="champion-text">¡104 PARTIDOS DESPUÉS, ESPAÑA CAMPEONA DEL MUNDO!</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    <div class="loading-state">
+      <p>Cargando partidos...</p>
+    </div>
+  }
+  
+  <!-- Finals Preview Block for Semifinales (Moved outside timeline-content so the line stops) -->
+  @if (phase === 'semifinales') {
+    <div class="semifinals-closing-node">
+      <div class="finals-preview-card motr-card" appScrollAnimate>
+        <div class="split-card">
+          <!-- Left Side: Tercer Puesto -->
+          <div class="split-half third-place-half">
+            <h3 class="preview-title">Tercer y Cuarto Puesto</h3>
+            <div class="preview-teams">
+              <img src="assets/flags/Flag-FRA.svg" alt="Francia" class="preview-flag">
+              <span class="vs-text">VS</span>
+              <img src="assets/flags/Flag-ENG.svg" alt="Inglaterra" class="preview-flag">
+            </div>
+            <ion-button fill="outline" class="preview-btn" routerLink="/knockouts/tercer-puesto">
+              VER TERCER PUESTO
+            </ion-button>
+          </div>
+          
+          <div class="split-divider"></div>
+
+          <!-- Right Side: Final -->
+          <div class="split-half final-half">
+            <h3 class="preview-title final-title">LA GRAN FINAL</h3>
+            <div class="preview-teams">
+              <img src="assets/flags/Flag-ESP.svg" alt="España" class="preview-flag">
+              <span class="vs-text">VS</span>
+              <img src="assets/flags/Flag-ARG.svg" alt="Argentina" class="preview-flag">
+            </div>
+            <ion-button fill="solid" color="warning" class="preview-btn final-btn" routerLink="/knockouts/final">
+              VER FINAL
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+  
+  <app-knockout-navigation [phase]="phase"></app-knockout-navigation>
+</div>

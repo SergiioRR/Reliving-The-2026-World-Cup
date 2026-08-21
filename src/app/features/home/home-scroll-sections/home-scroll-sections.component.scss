@@ -1,0 +1,336 @@
+/**
+ * @file home-scroll-sections.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Angular component or service module for the World Cup 2026 application.
+ */
+
+/* ═══════════════════════════════════════════════════════
+   HomeScrollSectionsComponent
+   Scroll-reveal: fade-up + scale via IntersectionObserver
+   ═══════════════════════════════════════════════════════ */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────
+   Base scroll section — initial hidden state
+   ───────────────────────────────────────────── */
+.scroll-section {
+  padding: 80px 24px;
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+
+  /* Revealed state (added by IntersectionObserver) */
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+/* ─────────────────────────────────────────────
+   Typography
+   ───────────────────────────────────────────── */
+.section-eyebrow {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #F1BF00;       /* Contrast on midnight 16.0:1 ✓ */
+}
+
+.section-title {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: clamp(2.4rem, 7vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  color: #f8fafc;        /* 19.6:1 on midnight ✓ */
+  margin: 0;
+
+  &--accent {
+    color: #F1BF00;
+  }
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.5rem;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #334155);
+  }
+
+  &::after {
+    background: linear-gradient(90deg, #334155, transparent);
+  }
+}
+
+.section-body {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: clamp(0.95rem, 2vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.8;
+  color: #94a3b8;        /* 4.7:1 on #0a0a0f ✓ */
+  max-width: 680px;
+  margin: 0;
+
+  strong {
+    color: #f8fafc;
+    font-weight: 700;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Section 1: Intro — Stat Chips
+   ───────────────────────────────────────────── */
+.intro-section {
+  background: linear-gradient(to bottom, #0a0a0f, #0f172a);
+  border-bottom: 1px solid #1e293b;
+}
+
+.section-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.stat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 16px 20px;
+  min-width: 100px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 204, 0, 0.4);
+    transform: translateY(-3px);
+  }
+}
+
+.stat-value {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: 2.2rem;
+  line-height: 1;
+  color: #F1BF00;
+  letter-spacing: 0.04em;
+}
+
+.stat-label {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+/* ─────────────────────────────────────────────
+   Section 2: Legend — Two-column layout
+   ───────────────────────────────────────────── */
+.legend-section {
+  background: linear-gradient(to bottom, #0f172a, #0a0a0f);
+}
+
+.legend-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  text-align: left;
+  width: 100%;
+  max-width: 900px;
+}
+
+.legend-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.legend-quote {
+  border-left: 3px solid #CC0000;
+  padding: 12px 16px;
+  margin: 8px 0 0;
+  background: rgba(204, 0, 0, 0.08);
+  border-radius: 0 8px 8px 0;
+
+  p {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    font-style: italic;
+    color: #f8fafc;
+    margin: 0 0 6px;
+  }
+
+  cite {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-style: normal;
+    font-weight: 500;
+  }
+}
+
+/* Fix 7: All-Stars Poster — text overlay with backdrop-filter */
+.allstars-poster-slot {
+  position: relative;
+  width: 100%;
+  min-height: 360px;
+  background:
+    linear-gradient(160deg, #0f172a 0%, #1a0a00 40%, #0a0f1a 100%);
+  border: 2px solid #334155;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Simulated poster background — 11-player grid pattern */
+.poster-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 12px;
+    height: 100%;
+  }
+}
+
+.poster-player-slot {
+  background: linear-gradient(135deg, rgba(255,204,0,0.04), rgba(204,0,0,0.08));
+  border-radius: 8px;
+  border: 1px solid rgba(255,204,0,0.06);
+}
+
+/* Fix 7: Glass overlay panel with backdrop-filter:blur(8px) */
+.poster-overlay-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  background: rgba(10, 10, 15, 0.45);   /* semi-transparent dark */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  .poster-overlay__icon {
+    font-size: 3.5rem;
+    filter: drop-shadow(0 0 24px rgba(255,204,0,0.5));
+    animation: trophy-float 3.5s ease-in-out infinite;
+  }
+
+  .poster-overlay__title {
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: #f8fafc;       /* 19.6:1 ✓ */
+    margin: 0;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  }
+
+  .poster-overlay__sub {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #F1BF00;       /* 16.0:1 ✓ */
+    margin: 0;
+  }
+}
+
+@keyframes trophy-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+
+/* ─────────────────────────────────────────────
+   Mobile (320–430px)
+   ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .scroll-section {
+    padding: 56px 16px;
+  }
+
+  .legend-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .legend-quote {
+    text-align: left;
+  }
+
+  .allstars-poster-slot {
+    min-height: 220px;
+  }
+
+  .section-stats-row {
+    gap: 10px;
+  }
+
+  .stat-chip {
+    min-width: 80px;
+    padding: 12px 14px;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Reduced Motion — sections shown immediately
+   (IntersectionObserver also checks this flag)
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .stat-chip:hover {
+    transform: none;
+  }
+
+  /* Fix 6/7: poster float animation off */
+  .poster-overlay-text .poster-overlay__icon {
+    animation: none;
+  }
+}

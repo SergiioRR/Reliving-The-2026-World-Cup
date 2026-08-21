@@ -1,0 +1,86 @@
+/**
+ * @file statistics.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Component for displaying detailed match information, statistics, and lineups.
+ */
+
+.statistics-card {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  background: var(--ion-color-white, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* Accessible Contrast Background for Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    background: var(--ion-color-step-50, #1e1e1e);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Base styles for progress bars */
+.home-bar {
+  /* Invert direction to grow from right to left (towards center) */
+  transform: scaleX(-1);
+  border-radius: 4px;
+  height: 8px;
+}
+
+.away-bar {
+  border-radius: 4px;
+  height: 8px;
+}
+
+/* "DOMINIO ESPAÑOL" Highlight Animation for Possession */
+.possession-highlight {
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(185, 28, 28, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  border-left: 4px solid #b91c1c; /* text-red-700 equivalent */
+  margin-bottom: 24px;
+  
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(145deg, rgba(239, 68, 68, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+    border-left-color: #ef4444; /* Lighter red for dark mode contrast */
+  }
+}
+
+.pulsing-bar {
+  height: 12px; /* Thicker for possession */
+  --progress-background: rgba(185, 28, 28, 0.2);
+  
+  &::part(progress) {
+    background: #b91c1c;
+    box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
+  }
+  
+  /* Respects WCAG prefers-reduced-motion */
+  @media (prefers-reduced-motion: no-preference) {
+    animation: pulse-glow 2s infinite ease-in-out;
+  }
+}
+
+/* Native CSS Keyframe Animation */
+@keyframes pulse-glow {
+  0% { 
+    opacity: 0.85; 
+    filter: drop-shadow(0 0 4px rgba(185, 28, 28, 0.4)); 
+  }
+  50% { 
+    opacity: 1; 
+    filter: drop-shadow(0 0 12px rgba(185, 28, 28, 0.8)); 
+  }
+  100% { 
+    opacity: 0.85; 
+    filter: drop-shadow(0 0 4px rgba(185, 28, 28, 0.4)); 
+  }
+}
+
+/* Typography styles */
+.stat-label {
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 1.125rem; /* equivalent to text-lg */
+}

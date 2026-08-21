@@ -1,0 +1,163 @@
+/**
+ * @file hero-cover.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Hero cover component for the home page, displaying the main World Cup 2026 banner.
+ */
+
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 100vh; 
+  background-color: #000000;
+
+  @media (max-width: 768px) {
+    min-height: auto;
+  }
+}
+
+.hero-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  @media (max-width: 768px) {
+    min-height: auto;
+  }
+}
+
+/* ─── LAYER 1: BACKGROUND & RIVER GRADIENT ─── */
+.hero-background {
+  position: absolute;
+  inset: 0;
+  background-color: #000000;
+  background-image: url('/assets/images/skyline1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat; /* Evita que el cielo se repita abajo al haber movido la foto hacia arriba */
+  background-position: center -25vh; 
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    /* Llegamos a negro puro al 75% justo antes de que se acabe la imagen de fondo para que el difuminado sea perfecto */
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 40%, #000000 75%, #000000 100%);
+  }
+}
+
+/* ─── LAYER 2: FOREGROUND CONTENT ─── */
+.hero-foreground {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── STARS ─── */
+.hero-stars {
+  position: absolute;
+  top: 15px; /* Pegadas al borde superior para alinearse con la nueva aguja */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 160px; /* Hueco exacto para que la aguja pase por en medio */
+  z-index: 3;
+  
+  .star {
+    width: 90px; /* Más grandes */
+    height: 90px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 12px rgba(255, 204, 0, 0.8));
+    animation: glowPulse 3s infinite alternate;
+  }
+}
+
+@keyframes glowPulse {
+  0% { filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.5)); transform: scale(1); }
+  100% { filter: drop-shadow(0 0 16px rgba(255, 204, 0, 1)); transform: scale(1.05); }
+}
+
+/* ─── CHAMPIONS CUTOUT ─── */
+.hero-champions {
+  width: 100%;
+  margin-top: 120px; /* Despejamos un poco para que se vean bien los rascacielos */
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+
+.champions-img {
+  width: 100%;
+  height: auto; /* Permite que la imagen escale al 100% sin recortarse jamás */
+  display: block;
+  object-fit: cover;
+  object-position: top center; /* Anclado arriba para que NUNCA se corten las cabezas/brazos */
+  
+  /* CRITICAL: Seamless blend into the black river on bottom, left, and right */
+  -webkit-mask-image: 
+    linear-gradient(to bottom, black 30%, transparent 85%),
+    linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: 
+    linear-gradient(to bottom, black 30%, transparent 85%),
+    linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.hero-content {
+  width: 100%;
+  margin-top: -120px; /* Arrastramos el bloque hacia arriba para que monte sobre el negro difuminado de los jugadores */
+  padding: 0 24px 32px; /* Reducido el padding inferior (antes 80px) para acercarlo a la siguiente sección */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 4;
+
+  @media (max-width: 768px) {
+    margin-top: -10px; /* Texto más abajo, dentro de la zona negra */
+    padding-bottom: 8px; /* Reducir al mínimo para no sumar más hueco negro al siguiente componente */
+  }
+}
+
+.headline {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; /* ExtraBold */
+  font-size: clamp(22px, 5vw, 44px); /* Ajustado para que en móvil (mínimo) sea de 22px en lugar de 28px */
+  color: #FFFFFF;
+  line-height: 1.3;
+  margin: 0 0 24px 0;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+
+  @media (max-width: 768px) {
+    font-size: clamp(20px, 6vw, 26px); /* Aún más pequeño en móviles estrechos */
+    
+    .desktop-br {
+      display: none;
+    }
+  }
+
+  .highlight {
+    color: #F1BF00;
+  }
+}
+
+.cta-explore-btn {
+  --border-radius: 50px;
+  --box-shadow: 0 4px 16px rgba(233, 39, 54, 0.45);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 2vw, 1.1rem); /* Texto del botón más pequeño */
+  letter-spacing: 0.02em;
+  margin: 0;
+
+  /* Strict WCAG Touch Target Rules */
+  min-height: 48px; /* Altura ajustada (mínimo 44px para WCAG) */
+  --padding-start: 16px; /* Más estrecho */
+  --padding-end: 16px;
+}

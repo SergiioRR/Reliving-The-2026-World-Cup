@@ -1,0 +1,106 @@
+/**
+ * @file nav-and-timeline.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Angular component or service module for the World Cup 2026 application.
+ */
+
+/* WCAG 2.1 Contrast & Touch Targets */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.high-contrast-text {
+  color: #111827; /* Dark slate text against white/light backgrounds ensures > 4.5:1 */
+}
+
+.phase-segment {
+  margin-bottom: 16px;
+}
+
+.ad-slot-placeholder {
+  min-height: 250px; /* Zero CLS enforcement */
+  background-color: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+  color: #4b5563; /* Contrast 4.54:1 */
+}
+
+.match-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Ensure contrast for pitch */
+.lineup-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 16px 0;
+  padding: 16px;
+  background: #14532d; /* Dark green ensures > 4.5:1 contrast for white text */
+  border-radius: 4px;
+  
+  .vs-text {
+    font-weight: bold;
+    color: #ffffff; 
+  }
+}
+
+.jersey-kit {
+  width: 60px;
+  height: 60px;
+}
+
+.substitution-indicator {
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Substitution Animations */
+@keyframes swap-out {
+  0% { transform: translateX(0) scale(1); opacity: 1; }
+  100% { transform: translateX(-50px) scale(0.8); opacity: 0; }
+}
+
+@keyframes swap-in {
+  0% { transform: translateX(50px) scale(0.8); opacity: 0; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+.animating {
+  animation: swap-out 0.5s ease forwards;
+}
+
+/* Accessible Motion */
+@media (prefers-reduced-motion: reduce) {
+  .animating {
+    animation: none;
+    opacity: 0; /* instant state change */
+  }
+}
+
+.footer-cta {
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.cta-button {
+  background: #2563eb; /* High contrast blue */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,0 +1,187 @@
+/**
+ * @file header-marquee.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Header marquee component displaying a continuous scroll of teams or messages.
+ */
+
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.victory-banner {
+  height: 36px;
+  background-color: #AA151B;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .victory-static {
+    display: none;
+  }
+}
+
+.victory-track {
+  display: flex;
+  white-space: nowrap;
+  flex-shrink: 0;
+  animation: victory-marquee 70s linear infinite;
+}
+
+.victory-text {
+  color: #F1BF00;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  font-size: 1.05rem;
+  padding-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.inline-flag {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+
+.flags-marquee-wrapper {
+  height: 64px;
+  background: #111111;
+  border-bottom: 3px solid #CC0000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.flags-track {
+  display: flex;
+  gap: 8px;
+  padding: 0 4px;
+  animation: flags-marquee 40s linear infinite;
+  flex-shrink: 0;
+}
+
+.flag-btn {
+  --padding-start: 0;
+  --padding-end: 0;
+  --background-hover: rgba(255, 204, 0, 0.12);
+  --border-radius: 50%;
+  margin: 0;
+
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  &::part(native) {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+}
+
+.flag-circle-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 204, 0, 0.4);
+}
+
+.flag-img {
+  width: 100%;
+  height: 100%;
+  /* cover asegura que la bandera ocupe el 100% del círculo sin dejar huecos */
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1);
+}
+
+.fallback-badge {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  letter-spacing: 0.05em;
+  background-color: #333333;
+  color: #FFFFFF;
+}
+
+@keyframes victory-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes flags-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .victory-track,
+  .flags-track {
+    animation: none;
+  }
+
+  .victory-track {
+    display: none;
+  }
+
+  .victory-static {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: #F1BF00;
+    font-weight: 800;
+    margin: 0;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+  }
+
+  .flags-marquee-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .flags-track {
+    animation: none;
+    padding-right: 16px;
+  }
+
+  .flags-track[aria-hidden="true"] {
+    display: none;
+  }
+}

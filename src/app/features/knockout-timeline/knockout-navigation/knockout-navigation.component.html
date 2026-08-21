@@ -1,0 +1,23 @@
+<!--
+  ~ @file knockout-navigation.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Timeline component displaying the knockout stage matches and progression.
+  -->
+
+<div class="floating-nav-container" [ngClass]="{'single-nav': (!prevLabel || !nextLabel) && (prevLabel || nextLabel)}">
+  @if (prevLabel) {
+    <a [routerLink]="prevRoute" 
+       class="nav-pill nav-left" 
+       [attr.aria-label]="prevAria">
+      {{ prevLabel }}
+    </a>
+  }
+
+  @if (nextLabel) {
+    <a [routerLink]="nextRoute" 
+       class="nav-pill nav-right" 
+       [attr.aria-label]="nextAria">
+      {{ nextLabel }}
+    </a>
+  }
+</div>

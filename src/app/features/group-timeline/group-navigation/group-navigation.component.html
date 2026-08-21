@@ -1,0 +1,19 @@
+<!--
+  ~ @file group-navigation.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Timeline component displaying the group stage matches.
+  -->
+
+<div class="floating-nav-container">
+  <a [routerLink]="prevRoute" 
+     class="nav-pill nav-left" 
+     [attr.aria-label]="prevAria">
+    {{ prevLabel }}
+  </a>
+
+  <a [routerLink]="nextRoute" 
+     class="nav-pill nav-right" 
+     [attr.aria-label]="nextAria">
+    {{ nextLabel }}
+  </a>
+</div>

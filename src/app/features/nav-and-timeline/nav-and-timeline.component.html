@@ -1,0 +1,123 @@
+<!--
+  ~ @file nav-and-timeline.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Angular component or service module for the World Cup 2026 application.
+  -->
+
+<ion-segment [value]="selectedPhase" (ionChange)="onPhaseChange($event)" class="phase-segment">
+  <ion-segment-button value="Fase de Grupos" class="touch-target">
+    <ion-label>Grupos</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="16avos" class="touch-target">
+    <ion-label>16avos</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="Octavos" class="touch-target">
+    <ion-label>Octavos</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="Cuartos" class="touch-target">
+    <ion-label>Cuartos</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="Semis" class="touch-target">
+    <ion-label>Semis</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="Final" class="touch-target">
+    <ion-label>Final</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<div class="ad-slot-placeholder" role="complementary" aria-label="Sponsor Advertisement">
+  <p>Publicidad</p>
+</div>
+
+@if (selectedPhase === 'Fase de Grupos') {
+  <ion-accordion-group>
+    <ion-accordion value="A">
+      <ion-item slot="header" color="light" class="touch-target">
+        <ion-label class="high-contrast-text">Grupo A</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        @for (match of matches; track match.id) {
+          @if (match.group === 'A') {
+            <div class="match-card">
+              <h3 class="high-contrast-text">{{ match.homeTeamName }} vs {{ match.awayTeamName }}</h3>
+              
+              <div class="lineup-container">
+                <img [src]="getKitUrl(match.homeTeamFifaCode, 'home')" alt="Home Kit" class="jersey-kit" />
+                <span class="vs-text">VS</span>
+                <img [src]="getKitUrl(match.awayTeamFifaCode, 'away')" alt="Away Kit" class="jersey-kit" />
+              </div>
+
+              <ion-list>
+                @for (event of match.events; track event.id) {
+                  <ion-item class="timeline-item touch-target">
+                    <ion-label class="high-contrast-text">
+                      <strong>{{ event.minute }}'</strong> - {{ event.type }}
+                      <p>{{ event.description }}</p>
+                    </ion-label>
+                    
+                    @if (event.type === 'SUSTITUCION') {
+                      <div 
+                        class="substitution-indicator touch-target" 
+                        [class.animating]="animatingSubstitutions[event.id]"
+                        (click)="triggerSubstitution(event.id)"
+                        role="button"
+                        aria-label="Play substitution animation"
+                        tabindex="0"
+                        (keyup.enter)="triggerSubstitution(event.id)">
+                        🔄
+                      </div>
+                    }
+                  </ion-item>
+                }
+              </ion-list>
+            </div>
+          }
+        }
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+}
+
+@if (selectedPhase !== 'Fase de Grupos') {
+  <div class="knockout-stage">
+    @for (match of matches; track match.id) {
+      <div class="match-card">
+        <h3 class="high-contrast-text">{{ match.homeTeamName }} vs {{ match.awayTeamName }}</h3>
+        
+        <div class="lineup-container">
+          <img [src]="getKitUrl(match.homeTeamFifaCode, 'home')" alt="Home Kit" class="jersey-kit" />
+          <span class="vs-text">VS</span>
+          <img [src]="getKitUrl(match.awayTeamFifaCode, 'away')" alt="Away Kit" class="jersey-kit" />
+        </div>
+
+        <ion-list>
+          @for (event of match.events; track event.id) {
+            <ion-item class="timeline-item touch-target">
+              <ion-label class="high-contrast-text">
+                <strong>{{ event.minute }}'</strong> - {{ event.type }}
+                <p>{{ event.description }}</p>
+              </ion-label>
+              
+              @if (event.type === 'SUSTITUCION') {
+                <div 
+                  class="substitution-indicator touch-target" 
+                  [class.animating]="animatingSubstitutions[event.id]"
+                  (click)="triggerSubstitution(event.id)"
+                  role="button"
+                  aria-label="Play substitution animation"
+                  tabindex="0"
+                  (keyup.enter)="triggerSubstitution(event.id)">
+                  🔄
+                </div>
+              }
+            </ion-item>
+          }
+        </ion-list>
+      </div>
+    }
+  </div>
+}
+
+<footer class="footer-cta">
+  <button class="cta-button touch-target" aria-label="Patrocinar o Donar">Patrocinar / Donar</button>
+</footer>

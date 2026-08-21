@@ -1,0 +1,115 @@
+/**
+ * @file legend-card.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Landing narrative component to tell the story of the World Cup.
+ */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.narrative-card {
+  margin: 0;
+  border-radius: 16px;
+  background-color: #121212;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 204, 0, 0.28);
+
+  /* Initial state before entering viewport */
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+    @media (max-width: 768px) {
+      transform: translateY(12px);
+      transition-duration: 0.4s;
+    }
+
+  /* Triggered by IntersectionObserver Directive */
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .decorative-trionda {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 60px;
+    height: auto;
+    transform: rotate(-15deg); // Torcido hacia la izquierda para la tarjeta izquierda
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.9;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}
+
+.card-stats-container {
+  padding: 48px 24px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stats-headline {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #F1BF00;
+  margin: 0 0 16px 0; // Margen ajustado
+  text-transform: uppercase;
+  text-align: center; // Centramos el título como solicitaste
+}
+
+.stats-paragraph {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0; // Eliminamos los 24px de margen inferior que dejaban un hueco vacío
+  text-align: justify; // Alinea las líneas a ambos lados
+}
+
+/* Stats row removed as part of text update */
+
+.card-poster-container {
+  width: 100%;
+  height: 350px; // Reducido para móvil para evitar que se vea borroso
+  background-color: #1A1A1A;
+  position: relative;
+  
+  .legend-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center 20%; // Ajuste para que se vean bien las caras si se recorta un poco
+    display: block;
+  }
+}
+
+/* Desktop layout adjustment as per spec */
+@media (min-width: 768px) {
+  .narrative-card {
+    flex-direction: row;
+    
+    .card-stats-container {
+      width: 65%; // Más ancho para que las líneas sean más largas
+      padding: 40px; 
+      justify-content: center;
+    }
+    
+    .card-poster-container {
+      width: 35%; // Menos ancho para evitar que se estire
+      height: auto;
+      min-height: 300px; // Reducido para que abrace al texto sin dejar huecos
+      border-left: 1px solid rgba(255,255,255,0.05);
+    }
+  }
+}

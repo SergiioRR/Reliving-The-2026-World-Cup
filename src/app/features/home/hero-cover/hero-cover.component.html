@@ -1,0 +1,40 @@
+<!--
+  ~ @file hero-cover.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Hero cover component for the home page, displaying the main World Cup 2026 banner.
+  -->
+
+<div class="hero-container">
+
+  <!-- Layer 1: Background Skyline & Gradient -->
+  <div class="hero-background"></div>
+
+  <!-- Layer 2: Foreground Content (Flex Column) -->
+  <div class="hero-foreground">
+
+    <!-- Top: Glowing Stars -->
+    <div class="hero-stars">
+      <img src="assets/images/stars.png" alt="Estrella" class="star" />
+      <img src="assets/images/stars.png" alt="Estrella" class="star" />
+    </div>
+
+    <!-- Middle: Floating Champions Cutout -->
+    <div class="hero-champions">
+      <img src="assets/images/spain-champions-cutout.webp.png" alt="España Campeona del Mundo" class="champions-img" />
+    </div>
+
+    <!-- Bottom: Typography & CTA Button -->
+    <div class="hero-content">
+      <h1 class="headline">
+        La historia más grande del fútbol español, <br class="desktop-br">
+        <span class="highlight"> vivida en Norteamérica</span>
+      </h1>
+
+      <ion-button shape="round" color="danger" class="cta-explore-btn" routerLink="/partidos">
+        Explorar FWC2026 &rarr;
+      </ion-button>
+    </div>
+
+  </div>
+
+</div>

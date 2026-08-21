@@ -1,0 +1,93 @@
+<!--
+  ~ @file chatbot.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description AI chatbot component providing interactive World Cup insights.
+  -->
+
+<div class="chatbot-wrapper">
+  <div class="chatbot-header">
+    <h1 class="chatbot-title">NARANJITO, DE MASCOTA EN EL MUNDIAL DE 1982 A TU ASISTENTE DE IA EN EL MUNDIAL DE 2026
+    </h1>
+    <button class="exit-btn" (click)="closeChat()" aria-label="Cerrar chat">SALIR</button>
+  </div>
+
+  <div class="chatbot-content">
+    <div class="void-glow"></div>
+
+    <div class="chat-container">
+
+      <!-- System Status Chip -->
+      <div class="status-chip-container">
+        <span class="status-chip" role="status" aria-live="polite">
+          <span class="status-dot"></span>
+          CONNECTED TO FIFA WORLD CUP 2026
+        </span>
+      </div>
+
+      <!-- Ephemeral Memory Chat Loop -->
+      <div class="messages-list">
+        @for (msg of messages(); track msg.id) {
+        @if (msg.role === 'assistant' || msg.role === 'system') {
+        <!-- AI Message -->
+        <div class="message-row ai-message" role="log">
+          <div class="avatar-container">
+            <div class="ai-avatar">
+              <img src="assets/icons/naranjito.svg" alt="Naranjito" />
+            </div>
+          </div>
+          <div class="message-content">
+            <div class="bubble ai-bubble">
+              <p>{{ msg.content }}</p>
+            </div>
+            <span class="timestamp">{{ msg.timestamp | date:'shortTime' }}</span>
+          </div>
+        </div>
+        } @else {
+        <!-- User Message -->
+        <div class="message-row user-message" role="log">
+          <div class="message-content">
+            <div class="bubble user-bubble">
+              <p>{{ msg.content }}</p>
+            </div>
+            <div class="timestamp-row">
+              <span class="timestamp">{{ msg.timestamp | date:'shortTime' }}</span>
+              <ion-icon name="checkmark-done" class="read-receipt" aria-hidden="true"></ion-icon>
+            </div>
+          </div>
+        </div>
+        }
+        }
+
+        <!-- AI Typing Indicator -->
+        @if (isTyping()) {
+        <div class="message-row ai-message" aria-live="polite" aria-label="Naranjito is typing">
+          <div class="avatar-container">
+            <div class="ai-avatar">
+              <img src="assets/icons/naranjito.svg" alt="Naranjito" />
+            </div>
+          </div>
+          <div class="message-content">
+            <div class="bubble ai-bubble typing-bubble">
+              <div class="typing-dot"></div>
+              <div class="typing-dot delay-1"></div>
+              <div class="typing-dot delay-2"></div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Input Area -->
+  <div class="chatbot-footer">
+    <div class="input-container">
+      <input type="text" class="chat-input" placeholder="Pregunta a Naranjito" [ngModel]="newMessage()"
+        (ngModelChange)="newMessage.set($event)" (keyup.enter)="sendMessage()" />
+
+      <ion-button aria-label="Send message" class="send-btn" (click)="sendMessage()">
+        <ion-icon name="send" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</div>

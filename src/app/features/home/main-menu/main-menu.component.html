@@ -1,0 +1,86 @@
+<!--
+  ~ @file main-menu.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Main menu navigation component for the home page.
+  -->
+
+<ion-toolbar class="main-nav-toolbar" role="navigation" aria-label="Menú principal de torneos">
+  <div class="nav-container">
+
+    <!-- Left: FIFA Trophy real SVG -->
+    <a href="/" class="brand-container-btn" aria-label="Volver al inicio" style="text-decoration: none; outline: none; display: block; cursor: pointer; z-index: 999; position: relative;">
+      <div class="brand-container">
+        <ion-img src="assets/icons/trofeo.svg" alt="Trofeo Mundial 2026" class="brand-trophy">
+        </ion-img>
+      </div>
+    </a>
+
+    <!-- Center: Navigation Links -->
+    <nav class="nav-links">
+      <ion-button fill="clear" class="nav-btn" id="trigger-matches">
+        PARTIDOS <span class="chevron">▾</span>
+      </ion-button>
+      <ion-popover #matchesPopover trigger="trigger-matches" triggerAction="click" alignment="center">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item button routerLink="/partidos" (click)="matchesPopover.dismiss()">Vista General Partidos</ion-item>
+              <ion-accordion-group>
+                <ion-accordion value="grupos" class="white-arrow-accordion">
+                  <ion-item slot="header">
+                    <ion-label>Fase de Grupos</ion-label>
+                  </ion-item>
+                  <div class="ion-padding" slot="content" style="padding: 0;">
+                    <ion-list>
+                      <ion-item button *ngFor="let g of groups" class="sub-item" 
+                                [routerLink]="['/group', g.toLowerCase()]" (click)="matchesPopover.dismiss()">
+                        Grupo {{g}}
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </ion-accordion>
+              </ion-accordion-group>
+              <ion-item button routerLink="/knockouts/dieciseisavos" (click)="matchesPopover.dismiss()">Dieciseisavos</ion-item>
+              <ion-item button routerLink="/knockouts/octavos" (click)="matchesPopover.dismiss()">Octavos</ion-item>
+              <ion-item button routerLink="/knockouts/cuartos" (click)="matchesPopover.dismiss()">Cuartos</ion-item>
+              <ion-item button routerLink="/knockouts/semifinales" (click)="matchesPopover.dismiss()">Semifinales</ion-item>
+              <ion-item button routerLink="/knockouts/tercer-puesto" (click)="matchesPopover.dismiss()">Tercer Puesto</ion-item>
+              <ion-item button routerLink="/knockouts/final" (click)="matchesPopover.dismiss()">Final</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-button fill="clear" class="nav-btn" id="trigger-stats">
+        ESTADÍSTICAS <span class="chevron">▾</span>
+      </ion-button>
+      <ion-popover #statsPopover trigger="trigger-stats" triggerAction="click" alignment="center">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item button (click)="navigateToStats('jugadores', statsPopover)">Estadísticas Jugadores</ion-item>
+              <ion-item button (click)="navigateToStats('selecciones', statsPopover)">Estadísticas Selecciones</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </nav>
+
+    <!-- Right: Naranjito mascot (real SVG character) -->
+    <div class="chatbot-trigger-container">
+      @if (!isChatbotRoute()) {
+        <div class="naranjito-tooltip">
+          ¡Hola! Soy Naranjito, tu Asistente de Inteligencia Artificial. ¡No dudes en preguntarme cualquier duda o
+          curiosidad que tengas sobre la Copa Mundial de la FIFA 2026!
+          <div class="tooltip-arrow"></div>
+        </div>
+      }
+      <ion-button class="naranjito-btn" fill="clear" routerLink="/chatbot"
+        aria-label="Mascota Naranjito - Asistente IA">
+        <ion-img src="assets/icons/naranjito.svg" alt="Mascota Naranjito - Asistente IA" class="naranjito-icon">
+        </ion-img>
+      </ion-button>
+    </div>
+
+  </div>
+</ion-toolbar>

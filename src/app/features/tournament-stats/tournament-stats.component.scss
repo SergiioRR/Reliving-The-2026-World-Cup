@@ -1,0 +1,429 @@
+/**
+ * @file tournament-stats.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Component for displaying overall tournament statistics and player rankings.
+ */
+
+.tournament-stats-container {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  /* El padding top se quita para que la imagen ocupe todo el ancho arriba */
+}
+
+/* 1. Imagen de Cabecera con degradado */
+.stats-hero {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  /* Aumentamos el alto para revelar las piernas del jugador */
+  min-height: 600px;
+  overflow: hidden;
+
+  .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/images/stats3.jpg');
+    background-size: cover;
+    background-position: center 15%;
+
+    @media (max-width: 768px) {
+      background-position: 20% 15%; /* Mueve el encuadre a la izquierda para que el jugador no quede cortado */
+    }
+  }
+
+  .hero-fade-mask {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Degradado progresivo desde más arriba */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 25%, rgba(0, 0, 0, 0.85) 60%, #000000 90%);
+  }
+}
+
+/* 2. Recuadro central para Título y Subtítulo */
+.header-section-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  /* Subimos el recuadro para que solape a la misma altura que en selecciones (60vh / 450px) */
+  margin-top: calc(-1 * max(15vh, 150px) - 30px);
+  position: relative;
+  z-index: 2;
+}
+
+.header-section {
+  text-align: center;
+  /* Centramos el texto dentro del recuadro */
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 48px;
+  padding: 32px 24px;
+
+  /* Recuadro con bordes redondeados dorados */
+  border: 2px solid #F1BF00;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Fondo oscuro semitransparente para mejor legibilidad */
+  backdrop-filter: blur(4px);
+  /* Efecto cristal sutil */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  /* Sombra elegante */
+
+  .main-title {
+    color: #F1BF00;
+    /* Dorado brillante */
+    font-size: clamp(24px, 4vw, 36px);
+    /* Letra en grande y responsiva */
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    /* Un pelín más de margen debajo del título */
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .subtitle {
+    color: #e5e7eb;
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* 3. Grid de Estadísticas */
+.stats-grid {
+  --ion-grid-padding: 0;
+  --ion-grid-column-padding: 8px;
+  /* Pequeña separación horizontal */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 40px 16px;
+}
+
+.stat-col {
+  display: flex;
+  /* Para que todas las cards en una fila tengan el mismo alto */
+}
+
+.stat-card {
+  background: transparent;
+  /* Borde dorado completo y redondeado */
+  border: 1px solid #F1BF00;
+  border-radius: 12px;
+
+  padding: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  /* Initial hidden state for animation */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+
+    @media (max-width: 768px) {
+      transform: translateY(12px);
+      transition-duration: 0.4s;
+    }
+
+  /* Final state when scrolled into view */
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-title {
+  color: #F1BF00;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  padding-bottom: 12px;
+
+  /* Force single line */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-item {
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .player-box {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid #ffffff;
+    /* Recuadro bordes blancos por defecto */
+    border-radius: 8px;
+    gap: 12px;
+  }
+
+  .rank-number {
+    font-size: 1.1rem;
+    font-weight: 900;
+    min-width: 20px;
+    text-align: center;
+    color: #ffffff;
+    /* Por defecto blanco */
+  }
+
+  .flag-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .player-name {
+    flex-grow: 1;
+    font-size: 0.95rem;
+    color: #ffffff;
+    /* Blanco para los que no son top 3 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .player-last-name {
+    font-weight: 800;
+  }
+
+  .player-value {
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #ffffff;
+    /* Blanco por defecto */
+  }
+
+  /* Colores según ranking (letra, valor y recuadro) */
+  &.rank-1 {
+
+    .rank-number,
+    .player-name,
+    .player-last-name,
+    .player-value {
+      color: #F1BF00;
+      /* Dorado */
+    }
+
+    .player-box {
+      border-color: #F1BF00;
+    }
+  }
+
+  &.rank-2 {
+
+    .rank-number,
+    .player-name,
+    .player-last-name,
+    .player-value {
+      color: #C0C0C0;
+      /* Plata */
+    }
+
+    .player-box {
+      border-color: #C0C0C0;
+    }
+  }
+
+  &.rank-3 {
+
+    .rank-number,
+    .player-name,
+    .player-last-name,
+    .player-value {
+      color: #CD7F32;
+      /* Bronce */
+    }
+
+    .player-box {
+      border-color: #CD7F32;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: flex-start;
+
+  .empty-text {
+    color: #52525b;
+    /* Gris oscuro para no llamar la atención */
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+}
+
+/* SECCIÓN PREMIOS (LOS NOMBRES PROPIOS) */
+.awards-spacing {
+  margin-top: 60px;
+}
+
+.awards-grid {
+  max-width: 1200px;
+  margin: 0 auto 60px auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.award-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #F1BF00;
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 24px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  /* Scroll animate */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+
+    @media (max-width: 768px) {
+      transform: translateY(12px);
+      transition-duration: 0.4s;
+    }
+
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.award-photo {
+  width: 100%;
+  height: 250px;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  position: relative;
+
+  /* Subtle gradient overlay at the bottom so text blends better */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 10%;
+  }
+}
+
+.award-title {
+  color: #C0C0C0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.award-player {
+  color: #F1BF00;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* NAVEGACIÓN INFERIOR */
+.navigation-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(40px, 8vw, 120px);
+  /* Mucho más separados entre sí */
+  margin-bottom: 60px;
+  padding: 0 24px;
+  flex-wrap: wrap;
+
+  .btn-gold {
+    background: #F1BF00;
+    /* Fondo dorado */
+    color: #000;
+    /* Letras negras */
+    border: none;
+    width: 340px;
+    /* Mayor anchura para textos largos */
+    max-width: 100%;
+    height: 54px;
+    /* Misma altura proporcional */
+    padding: 0 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 50px;
+    /* Forma circular/pill */
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #F1BF00;
+      /* Un dorado un poco más claro al hacer hover */
+      box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba(255, 215, 0, 0.4);
+    }
+  }
+}

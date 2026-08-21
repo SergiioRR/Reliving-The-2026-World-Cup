@@ -1,0 +1,344 @@
+<!--
+  ~ @file match-details.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Component for displaying detailed match information, statistics, and lineups.
+  -->
+
+<div class="match-details-container">
+
+
+
+  <!-- Loading state -->
+  @if (!matchDetails() && !loadError()) {
+  <div class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Cargando Partido...</p>
+  </div>
+  }
+
+  <!-- Error state -->
+  @if (loadError()) {
+  <div class="error-state">
+    <p>⚠️ No se pudo cargar el partido. <button (click)="goBack()">Volver</button></p>
+  </div>
+  }
+
+  @if (matchDetails(); as details) {
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h1 class="page-title">DETALLES DEL PARTIDO</h1>
+    </div>
+  </div>
+
+  <!-- Top Scoreboard Card -->
+  <ion-card class="scoreboard-card" color="dark">
+    <ion-card-content>
+      <div class="scoreboard-container">
+        <!-- Home Team -->
+        <div class="team-info local-team">
+          <div class="team-details-col local-details">
+            <span class="team-name">{{ details.homeTeamName }}</span>
+            <div class="status-button" [ngClass]="{
+                     'btn-siguiente': details.homeStatus === 'SIGUIENTE',
+                     'btn-eliminada': details.homeStatus === 'ELIMINADA',
+                     'btn-finalizado': details.homeStatus === 'FINALIZADO',
+                     'btn-campeon': details.homeStatus === 'CAMPEÓN',
+                     'btn-subcampeon': details.homeStatus === 'SUBCAMPEÓN',
+                     'btn-tercero': details.homeStatus === 'TERCERO',
+                     'btn-cuarto': details.homeStatus === 'CUARTO'
+                   }" [class.clickable]="details.homeStatus === 'SIGUIENTE' && details.homeNextMatchId"
+              (click)="goToNextMatch(details.homeNextMatchId)">
+              {{ details.homeStatus }}
+            </div>
+          </div>
+          <img [src]="'assets/flags/Flag-' + details.homeTeamFifaCode + '.svg'"
+            [alt]="'Bandera de ' + details.homeTeamName" class="team-flag circular-flag" />
+        </div>
+
+        <!-- Score -->
+        <div class="score-info">
+          <div class="status">{{ details.status }}</div>
+          <div class="score">
+            <span>{{ details.homeScore }}</span> - <span>{{ details.awayScore }}</span>
+          </div>
+          @if (details.penaltyScoreText) {
+          <div class="penalty-score-text">
+            {{ details.penaltyScoreText }}
+          </div>
+          }
+        </div>
+
+        <!-- Away Team -->
+        <div class="team-info visitor-team">
+          <img [src]="'assets/flags/Flag-' + details.awayTeamFifaCode + '.svg'"
+            [alt]="'Bandera de ' + details.awayTeamName" class="team-flag circular-flag" />
+          <div class="team-details-col visitor-details">
+            <span class="team-name">{{ details.awayTeamName }}</span>
+            <div class="status-button" [ngClass]="{
+                     'btn-siguiente': details.awayStatus === 'SIGUIENTE',
+                     'btn-eliminada': details.awayStatus === 'ELIMINADA',
+                     'btn-finalizado': details.awayStatus === 'FINALIZADO',
+                     'btn-campeon': details.awayStatus === 'CAMPEÓN',
+                     'btn-subcampeon': details.awayStatus === 'SUBCAMPEÓN',
+                     'btn-tercero': details.awayStatus === 'TERCERO',
+                     'btn-cuarto': details.awayStatus === 'CUARTO'
+                   }" [class.clickable]="details.awayStatus === 'SIGUIENTE' && details.awayNextMatchId"
+              (click)="goToNextMatch(details.awayNextMatchId)">
+              {{ details.awayStatus }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal Scorers -->
+      <div class="goalscorers-container">
+        <div class="team-scorers local-scorers">
+          @for (goal of homeGoals(); track goal.id) {
+          <div class="scorer">
+            <span class="scorer-name">{{ getShirtNameForEvent(goal) }}@if (goal.isOwnGoal) {<span> (pp)</span>} {{
+              goal.minute }}{{ goal.extraMinute ? '+' + goal.extraMinute : '' }}'</span> <img
+              src="assets/icons/trionda.svg" class="goal-icon" alt="Gol" />
+          </div>
+          }
+        </div>
+        <div class="team-scorers visitor-scorers">
+          @for (goal of awayGoals(); track goal.id) {
+          <div class="scorer">
+            <img src="assets/icons/trionda.svg" class="goal-icon" alt="Gol" /> <span class="scorer-name">{{ goal.minute
+              }}{{ goal.extraMinute ? '+' + goal.extraMinute : '' }}' {{ getShirtNameForEvent(goal) }}@if
+              (goal.isOwnGoal) {<span> (pp)</span>}</span>
+          </div>
+          }
+        </div>
+      </div>
+
+
+    </ion-card-content>
+  </ion-card>
+
+  <div class="content-wrapper">
+    <!-- Navigation Toggle -->
+    <ion-segment [value]="currentSegment()" (ionChange)="segmentChanged($event)" color="warning">
+      <ion-segment-button value="eventos">
+        <ion-label>EVENTOS PARTIDO</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="alineaciones">
+        <ion-label>ALINEACIONES</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Views -->
+    <div class="view-container">
+
+      <!-- Match Events View -->
+      @if (currentSegment() === 'eventos') {
+      <div class="events-view">
+        <div class="timeline">
+          @for (event of matchEvents(); track event.id) {
+          @if (event.description === 'TANDA_SEPARATOR') {
+          <div class="timeline-separator">
+            <span>TANDA DE PENALTIS</span>
+          </div>
+          } @else {
+          <div class="timeline-event" [ngClass]="[
+                    event.teamId === details.homeTeamFifaCode ? 'left' : 'right', 
+                    event.type === 'GOL' || event.type === 'PENALTI_GOL' ? 'goal-event' : '',
+                    event.type === 'PENALTI_FALLO' ? 'miss-event' : ''
+                  ]">
+
+            @if (event.type === 'GOL' || event.type === 'PENALTI_GOL') {
+            <div class="goal-pill-center">
+              <img src="assets/icons/trionda.svg" class="football-icon" alt="Gol" />
+              <span class="goal-minute-text">{{ event.minute }}{{ event.extraMinute ? '+' + event.extraMinute : '' }}{{
+                event.minute === 'PEN' ? '' : '\'' }}</span>
+            </div>
+            } @else if (event.type === 'PENALTI_FALLO') {
+            <div class="miss-pill-center">
+              <div class="cross-icon">✕</div>
+              <span class="miss-minute-text">{{ event.minute }}</span>
+            </div>
+            } @else {
+            <div class="event-minute">{{ event.minute }}{{ event.extraMinute ? '+' + event.extraMinute : '' }}'</div>
+            <div class="timeline-dot"></div>
+            }
+
+            <div class="event-content" [ngClass]="{
+                      'goal-content': event.type === 'GOL',
+                      'penalty-goal-content': event.type === 'PENALTI_GOL',
+                      'penalty-miss-content': event.type === 'PENALTI_FALLO',
+                      'sub-content': event.type === 'SUSTITUCION',
+                      'card-content': event.type === 'TARJETA'
+                    }">
+              @if (event.type === 'GOL' || event.type === 'PENALTI_GOL' || event.type === 'PENALTI_FALLO') {
+              <span class="event-player">{{ event.scorerName || event.playerName }}@if (event.isOwnGoal) {<span>
+                  (pp)</span>}</span>
+              }
+
+              @if (event.type === 'SUSTITUCION') {
+              <div class="substitution-event">
+                <div class="sub-players">
+                  <span class="sub-in">{{ event.playerInName }}</span>
+                  <span class="sub-out">sale {{ event.playerOutName }}</span>
+                </div>
+                <img src="assets/images/sustitucion.png" class="sub-icon" alt="Cambio">
+              </div>
+              }
+
+              @if (event.type === 'TARJETA') {
+              <div class="card-event">
+                <span class="event-player">{{ event.playerName }}</span>
+                @if (event.cardColor !== 'DOBLE_AMARILLA') {
+                <div class="card-square" [ngClass]="event.cardColor === 'AMARILLA' ? 'amarilla' : 'roja'"></div>
+                }
+                @if (event.cardColor === 'DOBLE_AMARILLA') {
+                <img src="assets/images/second-yellow.png" class="double-yellow-icon" alt="Doble Amarilla">
+                }
+              </div>
+              }
+            </div>
+          </div>
+          }
+          }
+        </div>
+      </div>
+      }
+
+      <!-- Lineups View -->
+      @if (currentSegment() === 'alineaciones') {
+      <div class="lineups-view">
+        <div class="pitch">
+          <div class="pitch-half home-half" [attr.data-formation]="details.homeFormation">
+            @for (player of homeStarters(); track player.id) {
+            <div class="player-marker" [attr.data-pos]="player.position">
+              @if (getSubstitutedBy(player); as subIn) {
+              <div class="substitution-group">
+                <img [src]="getShirtUrl(player)" (error)="onShirtImgError($event)"
+                  class="shirt-icon player-shirt-img sub-out-shirt">
+                <img [src]="getShirtUrl(subIn)" (error)="onShirtImgError($event)"
+                  class="shirt-icon player-shirt-img sub-in-shirt">
+                <img src="assets/images/sustitucion.png" class="sub-overlay-arrow">
+              </div>
+              } @else {
+              <img [src]="getShirtUrl(player)" (error)="onShirtImgError($event)" class="shirt-icon player-shirt-img">
+              }
+            </div>
+            }
+          </div>
+          <div class="pitch-line"></div>
+          <div class="pitch-half away-half" [attr.data-formation]="details.awayFormation">
+            @for (player of awayStarters(); track player.id) {
+            <div class="player-marker" [attr.data-pos]="player.position">
+              @if (getSubstitutedBy(player); as subIn) {
+              <div class="substitution-group">
+                <img [src]="getShirtUrl(player)" (error)="onShirtImgError($event)"
+                  class="shirt-icon player-shirt-img sub-out-shirt">
+                <img [src]="getShirtUrl(subIn)" (error)="onShirtImgError($event)"
+                  class="shirt-icon player-shirt-img sub-in-shirt">
+                <img src="assets/images/sustitucion.png" class="sub-overlay-arrow">
+              </div>
+              } @else {
+              <img [src]="getShirtUrl(player)" (error)="onShirtImgError($event)" class="shirt-icon player-shirt-img">
+              }
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Extras (below pitch) -->
+        <div class="match-extras-container">
+
+          <!-- Referee Section -->
+          <div class="referee-section">
+            <h3>ÁRBITRO</h3>
+            <div class="referee-info">
+              <img [src]="getRefereeFlag(details.refereeFifaCode)"
+                (error)="onRefereeFlagError($event, details.refereeFifaCode)" alt="Bandera" class="referee-flag" />
+              <span class="referee-name">{{ details.refereeName }}</span>
+            </div>
+          </div>
+
+          <!-- Teams Extras (Coaches & Subs) -->
+          <div class="teams-extras">
+            <!-- Home Column -->
+            <div class="team-column">
+              <div class="team-header">
+                <img [src]="'assets/flags/Flag-' + details.homeTeamFifaCode + '.svg'" alt="Bandera" />
+                <h4>{{ details.homeTeamName }}</h4>
+              </div>
+
+              <div class="coach-section">
+                <h5>ENTRENADOR</h5>
+                <span>{{ details.homeCoachName }}</span>
+              </div>
+
+              <div class="subs-section">
+                <h5>SUSTITUCIONES</h5>
+                <div class="bench-list">
+                  @for (sub of homeSubs(); track sub.id) {
+                  <div class="sub-player">
+                    @if (getSubstitutedFor(sub); as subOut) {
+                    <div class="substitution-group-bench">
+                      <img [src]="getShirtUrl(sub)" (error)="onShirtImgError($event)"
+                        class="shirt-icon player-shirt-img sub-out-shirt">
+                      <img [src]="getShirtUrl(subOut)" (error)="onShirtImgError($event)"
+                        class="shirt-icon player-shirt-img sub-in-shirt">
+                      <img src="assets/images/sustitucion.png" class="sub-overlay-arrow">
+                    </div>
+                    } @else {
+                    <img [src]="getShirtUrl(sub)" (error)="onShirtImgError($event)" class="shirt-icon player-shirt-img">
+                    }
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <!-- Away Column -->
+            <div class="team-column">
+              <div class="team-header">
+                <img [src]="'assets/flags/Flag-' + details.awayTeamFifaCode + '.svg'" alt="Bandera" />
+                <h4>{{ details.awayTeamName }}</h4>
+              </div>
+
+              <div class="coach-section">
+                <h5>ENTRENADOR</h5>
+                <span>{{ details.awayCoachName }}</span>
+              </div>
+
+              <div class="subs-section">
+                <h5>SUSTITUCIONES</h5>
+                <div class="bench-list">
+                  @for (sub of awaySubs(); track sub.id) {
+                  <div class="sub-player">
+                    @if (getSubstitutedFor(sub); as subOut) {
+                    <div class="substitution-group-bench">
+                      <img [src]="getShirtUrl(sub)" (error)="onShirtImgError($event)"
+                        class="shirt-icon player-shirt-img sub-out-shirt">
+                      <img [src]="getShirtUrl(subOut)" (error)="onShirtImgError($event)"
+                        class="shirt-icon player-shirt-img sub-in-shirt">
+                      <img src="assets/images/sustitucion.png" class="sub-overlay-arrow">
+                    </div>
+                    } @else {
+                    <img [src]="getShirtUrl(sub)" (error)="onShirtImgError($event)" class="shirt-icon player-shirt-img">
+                    }
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- Return Button -->
+      <div class="back-btn-container">
+        <button class="gold-back-btn" (click)="goBack()">
+          &larr; VOLVER
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
+</div>

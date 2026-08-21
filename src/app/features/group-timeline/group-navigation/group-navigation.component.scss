@@ -1,0 +1,40 @@
+/**
+ * @file group-navigation.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Timeline component displaying the group stage matches.
+ */
+
+.floating-nav-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  margin: 40px auto 32px auto;
+  padding: 0 24px;
+}
+
+.nav-pill {
+  pointer-events: auto; /* Enable clicks on the pills themselves */
+  background-color: #F1BF00;
+  color: #0A0A0A;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  }
+}

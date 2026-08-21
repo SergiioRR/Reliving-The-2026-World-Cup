@@ -1,0 +1,91 @@
+<!--
+  ~ @file group-timeline.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Timeline component displaying the group stage matches.
+  -->
+
+<div class="timeline-container">
+  <!-- Header Fade Gradient Container -->
+  <div class="header-fade">
+    <div class="header-content">
+      <ion-icon name="arrow-back-outline" class="back-btn"></ion-icon>
+      <h1 class="group-title">GRUPO {{ groupId }}</h1>
+    </div>
+  </div>
+
+  @if (matches()) {
+    <div class="timeline-content">
+      <!-- Central Golden Timeline Line -->
+      <div class="timeline-line"></div>
+
+      <!-- Alternating Match Cards -->
+      @for (match of matches(); track match.id; let i = $index) {
+        <div class="match-row" [ngClass]="{'row-left': i % 2 !== 0, 'row-right': i % 2 === 0}">
+          
+          <!-- Golden Stadium Node (Intersection) -->
+          <div class="timeline-node">
+            <img [src]="getStadiumLogo(match)" class="node-icon" alt="Sede">
+          </div>
+
+          <!-- Match Card -->
+          <ion-card class="match-card" appScrollAnimate [ngClass]="{'is-live': match.score?.status === 'LIVE'}">
+            <!-- LIVE Header -->
+            @if (match.score?.status === 'LIVE') {
+              <div class="live-header">
+                <span class="live-dot"></span> LIVE <span class="stadium-name">{{ match.stadium?.name }}</span>
+              </div>
+            }
+
+
+            <ion-card-content>
+              <div class="teams-container">
+                <div class="team">
+                  <div class="flag-placeholder">
+                    <img [src]="'assets/flags/Flag-' + match.homeTeamFifaCode + '.svg'" alt="{{ match.homeTeamName }}" class="flag-img">
+                  </div>
+                  <span class="team-name">{{ match.homeTeamFifaCode }}</span>
+                </div>
+                
+                <div class="score-container">
+                  <span class="score-number">{{ match.score?.home }}</span>
+                  <span class="score-separator">-</span>
+                  <span class="score-number">{{ match.score?.away }}</span>
+                  @if (match.score?.status === 'LIVE') {
+                    <span class="live-minute">75'</span>
+                  }
+                </div>
+                
+                <div class="team">
+                  <div class="flag-placeholder">
+                    <img [src]="'assets/flags/Flag-' + match.awayTeamFifaCode + '.svg'" alt="{{ match.awayTeamName }}" class="flag-img">
+                  </div>
+                  <span class="team-name">{{ match.awayTeamFifaCode }}</span>
+                </div>
+              </div>
+              
+              <div class="details-link-container">
+                <a class="details-link" [routerLink]="['/match', match.id]"
+                   (click)="trackInteraction()"
+                   [attr.aria-label]="'Ver detalles del partido ' + match.homeTeamName + ' contra ' + match.awayTeamName">
+                  VER DETALLES &rarr;
+                </a>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      }
+    </div>
+    
+    <!-- Group Classification at the end, outside timeline-content so the line ends here -->
+    <div class="classification-node">
+      <img [src]="'assets/groups/group' + groupId + '.svg'" alt="Clasificación Grupo {{ groupId }}" class="classification-img">
+    </div>
+  } @else {
+    <div class="loading-state">
+      <p>Cargando partidos...</p>
+    </div>
+  }
+
+  <!-- Floating Navigation Controls -->
+  <app-group-navigation [groupId]="groupId"></app-group-navigation>
+</div>

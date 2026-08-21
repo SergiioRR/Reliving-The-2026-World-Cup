@@ -1,0 +1,79 @@
+<!--
+  ~ @file header-marquee.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Header marquee component displaying a continuous scroll of teams or messages.
+  -->
+
+<header class="header-marquee-root" role="banner">
+  <div class="victory-banner" role="region" aria-label="Mensaje de victoria" aria-live="off">
+    <!-- Pista 1 -->
+    <div class="victory-track" aria-hidden="true">
+      @for (i of [1,2,3,4,5,6,7,8]; track $index) {
+        <span class="victory-text">
+          🏆 ESPAÑA CAMPEONA DEL MUNDO 2026 <img src="assets/flags/Flag-ESP.svg" class="inline-flag" alt="España"> · DOMINIO ESPAÑOL EN NORTEAMÉRICA 🏆 · 
+        </span>
+      }
+    </div>
+    
+    <div class="victory-track" aria-hidden="true">
+      @for (i of [1,2,3,4,5,6,7,8]; track $index) {
+        <span class="victory-text">
+          🏆 ESPAÑA CAMPEONA DEL MUNDO 2026 <img src="assets/flags/Flag-ESP.svg" class="inline-flag" alt="España"> · DOMINIO ESPAÑOL EN NORTEAMÉRICA 🏆 · 
+        </span>
+      }
+    </div>
+    
+    <p class="victory-static" aria-label="España Campeona del Mundo 2026">
+      🏆 ESPAÑA CAMPEONA DEL MUNDO 2026 <img src="assets/flags/Flag-ESP.svg" class="inline-flag" alt="España"> · DOMINIO ESPAÑOL EN NORTEAMÉRICA 🏆
+    </p>
+  </div>
+
+  
+  <div class="flags-marquee-wrapper" role="region" aria-label="48 selecciones participantes en el Mundial 2026">
+    <div class="flags-track">
+      @for (team of teams; track team.codFifa) {
+        <ion-button
+          class="flag-btn"
+          shape="round"
+          fill="clear"
+          [attr.aria-label]="'Ver perfil de ' + team.name"
+          [routerLink]="['/group', team.group]"
+          (click)="trackFlagClick(team.name)"
+        >
+          <div class="flag-circle-container">
+            @if (!hasFailed(team.codFifa)) {
+              <ion-img
+                [src]="getSvgPath(team.codFifa)"
+                [alt]="'Bandera de ' + team.name"
+                class="flag-img"
+                (ionError)="onImageError(team.codFifa)"
+              ></ion-img>
+            } @else {
+              
+              <ion-badge class="fallback-badge" color="medium">{{ team.codFifa }}</ion-badge>
+            }
+          </div>
+        </ion-button>
+      }
+    </div>
+    
+    <div class="flags-track" aria-hidden="true">
+      @for (team of teams; track team.codFifa) {
+        <ion-button class="flag-btn" shape="round" fill="clear" tabindex="-1" [routerLink]="['/group', team.group]" (click)="trackFlagClick(team.name)">
+          <div class="flag-circle-container">
+            @if (!hasFailed(team.codFifa)) {
+              <ion-img 
+                [src]="getSvgPath(team.codFifa)" 
+                alt="" 
+                class="flag-img" 
+                (ionError)="onImageError(team.codFifa)"
+              ></ion-img>
+            } @else {
+              <ion-badge class="fallback-badge" color="medium">{{ team.codFifa }}</ion-badge>
+            }
+          </div>
+        </ion-button>
+      }
+    </div>
+  </div>
+</header>

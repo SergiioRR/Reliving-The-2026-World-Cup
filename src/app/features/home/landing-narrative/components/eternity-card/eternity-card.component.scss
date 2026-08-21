@@ -1,0 +1,204 @@
+/**
+ * @file eternity-card.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Landing narrative component to tell the story of the World Cup.
+ */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.narrative-card {
+  margin: 0;
+  border-radius: 16px;
+  background-color: #121212;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 204, 0, 0.28);
+  
+  /* Initial state before entering viewport */
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+    @media (max-width: 768px) {
+      transform: translateY(12px);
+      transition-duration: 0.4s;
+    }
+
+  /* Triggered by IntersectionObserver Directive */
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .decorative-trionda {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 60px;
+    height: auto;
+    transform: rotate(15deg);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.9;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}
+
+.card-image-container {
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  
+  .bracket-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: top;
+    background-color: #151519; // Color exacto del fondo de cuadro.png para camuflar las esquinas transparentes
+  }
+
+  .groups-container {
+    display: flex;
+    flex-direction: row;
+    width: 106%; // Ensancha las columnas para comerse la separación exterior
+    margin-left: -3%; // Centra el contenedor ensanchado
+    justify-content: center;
+    padding-bottom: 12px;
+    
+    .group-left, .group-right {
+      flex: 1; 
+      min-width: 0; 
+      height: auto;
+      object-fit: contain;
+      object-position: top;
+    }
+
+    .group-left {
+      border-radius: 0 0 0 16px; // Restauramos la curva inferior izquierda
+      clip-path: inset(0 12% 0 0);
+      margin-right: -8%; // Juntamos las columnas hasta que se solapen (elimina la línea)
+    }
+
+    .group-right {
+      border-radius: 0 0 16px 0; // SÍ redondeamos la esquina de GroupsG-L
+      clip-path: inset(0 0 0 12%);
+      margin-left: -8%; // Juntamos las columnas hasta que se solapen
+    }
+  }
+}
+
+.card-text-container {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pill-badge {
+  align-self: center; /* Centrado en móviles */
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #F1BF00;
+  background-color: rgba(255, 204, 0, 0.1);
+  padding: 6px 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+.card-headline {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+  text-align: center; /* Centrado en móviles */
+}
+
+.card-paragraph {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  text-align: justify; /* Restaurado a justificado en todas las vistas */
+}
+
+.card-highlight {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #F1BF00;
+  margin: 8px 0 0 0;
+  text-align: justify; /* Justificado en móviles para que toque los márgenes */
+
+  .desktop-text {
+    display: none;
+  }
+  
+  .mobile-text {
+    display: inline;
+  }
+}
+
+/* Desktop layout adjustment as per spec */
+@media (min-width: 768px) {
+  .narrative-card {
+    flex-direction: row;
+    
+    .card-image-container {
+      width: 50%;
+      height: auto;
+      min-height: 300px;
+      aspect-ratio: unset;
+      justify-content: flex-start;
+      
+      .bracket-image {
+        height: auto;
+      }
+    }
+    
+    .card-text-container {
+      width: 50%;
+      padding: 48px;
+      justify-content: center;
+      
+      .pill-badge {
+        align-self: flex-start;
+      }
+
+      .card-headline {
+        text-align: left;
+      }
+      
+      /* Restauramos la alineación original en escritorio */
+      .card-paragraph {
+        text-align: justify;
+      }
+      .card-highlight {
+        text-align: center;
+
+        .desktop-text {
+          display: inline;
+        }
+
+        .mobile-text {
+          display: none;
+        }
+      }
+    }
+  }
+}

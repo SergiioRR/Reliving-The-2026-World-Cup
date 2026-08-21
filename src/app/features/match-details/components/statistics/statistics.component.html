@@ -1,0 +1,83 @@
+<!--
+  ~ @file statistics.component.html
+  ~ @author Sergio Romera Rupérez
+  ~ @description Component for displaying detailed match information, statistics, and lineups.
+  -->
+
+<ion-card class="statistics-card" mode="ios">
+  <ion-card-header>
+    <ion-card-title class="ion-text-center text-xl font-bold uppercase tracking-widest text-red-700">
+      Dominio Español
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-grid>
+      <!-- Team Names Header -->
+      <ion-row class="ion-align-items-center ion-margin-bottom">
+        <ion-col size="5" class="ion-text-start">
+          <ion-text color="primary" class="font-bold text-lg truncate">
+            {{ homeTeamName }}
+          </ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-text-center">
+          <ion-text color="medium" class="text-xs font-semibold">VS</ion-text>
+        </ion-col>
+        <ion-col size="5" class="ion-text-end">
+          <ion-text color="dark" class="font-bold text-lg truncate">
+            {{ awayTeamName }}
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <!-- Stats Rows -->
+      @for (stat of statRows; track stat.label) {
+        <div class="stat-container ion-margin-bottom" [class.possession-highlight]="stat.label === 'Posesión'">
+          <!-- Values and Label -->
+          <ion-row class="ion-align-items-center mb-1">
+            <ion-col size="3" class="ion-text-start font-bold stat-value" [class.text-red-700]="stat.label === 'Posesión'">
+              {{ stat.home }}{{ stat.isPercentage ? '%' : '' }}
+            </ion-col>
+            <ion-col size="6" class="ion-text-center">
+              <span class="text-sm font-medium stat-label" [class.text-red-800]="stat.label === 'Posesión'">
+                {{ stat.label }}
+              </span>
+            </ion-col>
+            <ion-col size="3" class="ion-text-end font-bold stat-value text-gray-500">
+              {{ stat.away }}{{ stat.isPercentage ? '%' : '' }}
+            </ion-col>
+          </ion-row>
+
+          <!-- Progress Bars -->
+          <ion-row class="ion-align-items-center">
+            <ion-col size="6" class="pr-1">
+              <ion-progress-bar 
+                [value]="getRatio(stat.home, stat.away, true)" 
+                class="home-bar" 
+                [class.pulsing-bar]="stat.label === 'Posesión'"
+                color="danger"
+                role="progressbar"
+                [attr.aria-label]="stat.label + ' ' + homeTeamName"
+                [attr.aria-valuenow]="stat.home"
+                aria-valuemin="0"
+                [attr.aria-valuemax]="stat.home + stat.away">
+              </ion-progress-bar>
+            </ion-col>
+            <ion-col size="6" class="pl-1">
+              <ion-progress-bar 
+                [value]="getRatio(stat.home, stat.away, false)" 
+                class="away-bar" 
+                color="medium"
+                role="progressbar"
+                [attr.aria-label]="stat.label + ' ' + awayTeamName"
+                [attr.aria-valuenow]="stat.away"
+                aria-valuemin="0"
+                [attr.aria-valuemax]="stat.home + stat.away">
+              </ion-progress-bar>
+            </ion-col>
+          </ion-row>
+        </div>
+      }
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

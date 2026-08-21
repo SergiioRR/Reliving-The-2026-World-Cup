@@ -1,0 +1,343 @@
+/**
+ * @file next-worldcup-countdown.component.scss
+ * @author Sergio Romera Rupérez
+ * @description Countdown timer component for the next World Cup.
+ */
+
+/* ═══════════════════════════════════════════════════════
+   NextWorldCupCountdownComponent — DOMINIO ESPAÑOL 2026
+   ═══════════════════════════════════════════════════════ */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────
+   Section container
+   ───────────────────────────────────────────── */
+.countdown-section {
+  padding: 30px 24px 72px; // top reducido para cerrar el hueco con la sección anterior
+  background-color: #000000;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ─────────────────────────────────────────────
+   Heading block
+   ───────────────────────────────────────────── */
+.countdown-header {
+  text-align: center;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.countdown-eyebrow {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #F1BF00;
+  /* Contrast 16.0:1 ✓ */
+}
+
+.countdown-title {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+  /* 19.6:1 ✓ */
+  margin: 0;
+
+  &--accent {
+    color: #F1BF00;
+  }
+}
+
+.countdown-slogan {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #94a3b8;
+  /* 4.7:1 ✓ */
+  margin: 0;
+
+  strong {
+    color: #f8fafc;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-br {
+      display: none;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Countdown Grid
+   ───────────────────────────────────────────── */
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 88px;
+}
+
+.countdown-value {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: clamp(2.8rem, 8vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #F1BF00;
+  /* 16.0:1 on #0a0a0f ✓ */
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 12px 16px;
+  min-width: 88px;
+  text-align: center;
+  /* Subtle inner glow */
+  box-shadow:
+    0 0 20px rgba(255, 204, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* Prevent layout shift as numbers change */
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #64748b;
+  /* decorative, not critical for content */
+}
+
+.countdown-sep {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: 3rem;
+  color: #FFFFFF; // Puntos blancos en lugar de gris azulado
+  line-height: 1;
+  align-self: center;
+  margin-bottom: 24px;
+  /* align with value block, above label */
+  animation: blink-sep 1s step-end infinite;
+}
+
+@keyframes blink-sep {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.countdown-finished {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: #F1BF00;
+  text-align: center;
+  padding: 24px;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  border-radius: 16px;
+  background: rgba(255, 204, 0, 0.06);
+}
+
+/* ─────────────────────────────────────────────
+   Monetization — (Bloque publicitario retirado para 
+   mantener diseño limpio y centrado en la marca)
+   ───────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────
+   Mobile (320–430px)
+   ───────────────────────────────────────────── */
+@media (max-width: 430px) {
+  .countdown-section {
+    padding: 36px 16px 52px; // móvil: top reducido
+    gap: 28px;
+  }
+
+  .countdown-grid {
+    gap: 4px;
+    flex-wrap: nowrap; // Forzamos a que no rompa la línea
+  }
+
+  .countdown-unit {
+    min-width: 60px;
+  }
+
+  .countdown-value {
+    padding: 8px 6px;
+    min-width: 60px;
+    font-size: 2.2rem;
+  }
+
+  .countdown-sep {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  .countdown-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Reduced Motion
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .countdown-sep {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Fix 10: Professional Site Footer
+   ═══════════════════════════════════════════════════════ */
+
+.site-footer {
+  width: 100%;
+  background: #000000;
+  border-top: 1px solid #1e293b;
+  padding: 36px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* centra horizontalmente en columna */
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+/* Footer brand removed per user request */
+
+/* Footer navigation */
+.footer-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  /* gap uniforme entre links y separadores */
+  justify-content: center;
+  width: 100%;
+  /* ocupa el ancho del footer */
+  max-width: 600px;
+  /* limita para que no se estire en desktop */
+  margin: 0 auto;
+  /* centra el bloque en sí */
+  padding: 0;
+  /* sin relleno lateral asimétrico */
+}
+
+.footer-link {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  /* decorative/secondary nav — sufficient for links */
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #94a3b8;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #F1BF00;
+    outline-offset: 2px;
+    color: #f8fafc;
+  }
+}
+
+.footer-sep {
+  color: #334155;
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+/* Removed WCAG Badge CSS as per refactor */
+
+/* Copyright */
+.footer-copyright {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.68rem;
+  color: #475569;
+  margin: 0;
+  line-height: 1.6;
+  text-align: center;
+  /* alineación central explícita */
+  width: 100%;
+  max-width: 600px;
+
+  small {
+    font-size: inherit;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Mobile footer
+   ───────────────────────────────────────────── */
+@media (max-width: 430px) {
+  .site-footer {
+    padding: 32px 16px 24px;
+    gap: 16px;
+  }
+
+  .footer-links {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-link {
+    font-size: clamp(0.5rem, 2.2vw, 0.75rem);
+    white-space: nowrap;
+    padding: 0;
+    min-height: auto;
+  }
+
+  .footer-sep {
+    display: block;
+    font-size: clamp(0.5rem, 2.2vw, 0.75rem);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Reduced motion: poster animation off
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .footer-link {
+    transition: none;
+  }
+}
