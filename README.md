@@ -145,7 +145,7 @@ Scroll-driven storytelling section:
 - Entrance animations powered by `scroll-animate.directive.ts` (Intersection Observer)
 
 ### 4.4 Countdown Timer
-Live countdown to the launch date (August 19, 2026):
+Live countdown to the the Next World Cup (2030):
 - Days / Hours / Minutes / Seconds with #F1BF00 accent numbers
 - Blinking colon separators
 - Footer navigation links to legal pages
