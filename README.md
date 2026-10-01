@@ -1,6 +1,6 @@
 ﻿# 🏆 RELIVING THE 2026 WORLD CUP 2026 — SPANISH DOMINANCE
 
-> **A mobile-first Angular/Ionic web application commemorating Spain's triumph at the 2026 FIFA World Cup.**
+> **A mobile-first Angular / Ionic web application commemorating Spain's triumph at the 2026 FIFA World Cup.**
 
 | | |
 |---|---|
